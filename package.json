@@ -22,7 +22,7 @@
   },
   "scripts": {
     "build": "babel src -d lib",
-    "bundle": "webpack lib/try-webpack.js dist/bundle.js"
+    "bundle": "webpack"
   },
   "dependencies": {
     "react": "^15.5.4",
