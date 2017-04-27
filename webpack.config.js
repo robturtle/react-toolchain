@@ -7,7 +7,7 @@ var WebpackChunkHash = require('webpack-chunk-hash');
 var isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  context: path.resolve(__dirname, 'lib'),
+  context: path.resolve(__dirname, 'src'),
 
   entry: {
     main: './try-webpack.js'
@@ -38,5 +38,15 @@ module.exports = {
       filename: 'chunk-manifest.json',
       manifestVariable: 'webpackManifest'
     }),
-  ]
+  ],
+
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        include: path.resolve(__dirname, 'src'),
+        loader: 'babel-loader'
+      }
+    ]
+  }
 };
