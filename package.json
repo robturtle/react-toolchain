@@ -17,10 +17,12 @@
     "babel-cli": "^6.24.1",
     "babel-preset-env": "^1.4.0",
     "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1"
+    "babel-preset-stage-2": "^6.24.1",
+    "webpack": "^2.4.1"
   },
   "scripts": {
-    "build": "babel src -d lib"
+    "build": "babel src -d lib",
+    "bundle": "webpack lib/try-webpack.js dist/bundle.js"
   },
   "dependencies": {
     "react": "^15.5.4",
