@@ -1,0 +1,9 @@
+{
+  "name": "react-toolchain",
+  "version": "0.1.0",
+  "description": "A demonstration of React toolchain",
+  "main": "index.js",
+  "repository": "git@github.com:robturtle/react-toolchain.git",
+  "author": "Yang Liu <jeremyrobturtle@gmail.com>",
+  "license": "MIT"
+}
