@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = function(env) {
   return {
@@ -20,7 +21,8 @@ module.exports = function(env) {
       }),
       new webpack.optimize.CommonsChunkPlugin({
         name: 'manifest'
-      })
+      }),
+      new ManifestPlugin()
     ]
   };
 };
