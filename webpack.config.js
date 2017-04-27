@@ -1,6 +1,8 @@
 var path = require('path');
 var webpack = require('webpack');
 var ManifestPlugin = require('webpack-manifest-plugin');
+var ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
+var WebpackChunkHash = require('webpack-chunk-hash');
 
 module.exports = function(env) {
   return {
@@ -10,7 +12,8 @@ module.exports = function(env) {
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: '[name].[chunkhash].js'
+      filename: '[name].[chunkhash].js',
+      chunkFilename: '[name].[chunkhash].js'
     },
     plugins: [
       new webpack.optimize.CommonsChunkPlugin({
@@ -22,7 +25,12 @@ module.exports = function(env) {
       new webpack.optimize.CommonsChunkPlugin({
         name: 'manifest'
       }),
-      new ManifestPlugin()
+      new ManifestPlugin(),
+      new WebpackChunkHash(),
+      new ChunkManifestPlugin({
+        filename: 'chunk-manifest.json',
+        manifestVariable: 'webpackManifest'
+      }),
     ]
   };
 };
