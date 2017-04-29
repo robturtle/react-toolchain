@@ -6,6 +6,8 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import 'react-hot-loader';
 import webpackConfig from '../webpack.config';
 import run from './runner';
+import clean from './clean';
+import copy from './copy';
 import startServer from './startServer';
 
 const [clientConfig, serverConfig] = webpackConfig;
@@ -13,8 +15,8 @@ const [clientConfig, serverConfig] = webpackConfig;
 const debug = require('debug')('tools:start');
 
 async function start() {
-  //await run(clean);
-  //await run(copy.bind(undefined, {watch: true}))
+  await run(clean);
+  await run(copy.bind(undefined, {watch: true}))
 
   await new Promise(resolve => {
     debug('patching webpack HMR');
