@@ -17,3 +17,5 @@ if (process.mainModule.children.length === 0 && process.argv.length > 2) {
   const module = require(`./${process.argv[2]}.js`).default;
   run(module).catch(err => console.error(err.stack));
 }
+
+export default run;

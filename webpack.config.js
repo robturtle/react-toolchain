@@ -1,3 +1,8 @@
+/**
+ * Adjusted based on React Starter Kit (https://www.reactstarterkit.com/)
+ * 
+ * Licensed under MIT license.
+ */
 var path = require('path');
 var webpack = require('webpack');
 var webpackMerge = require('webpack-merge');
@@ -24,14 +29,14 @@ var clientConfig = webpackMerge(baseConfig, {
   context: path.resolve(srcRoot, 'client'),
 
   entry: {
-    main: './try-webpack.js'
+    client: './try-webpack.js'
   },
 
   output: {
     filename: isProduction ? '[name].[chunkhash].js' : '[name].js',
     chunkFilename: isProduction ? '[name].[chunkhash].js' : '[name].js',
-    path: path.resolve(__dirname, 'dist', 'public'),
-    publicPath: '/'
+    path: path.resolve(__dirname, 'dist', 'public', 'assets'),
+    publicPath: '/assets/'
   },
 
   devtool: isProduction ? 'cheap-module-source-map' : 'cheap-module-eval-source-map',
@@ -53,6 +58,16 @@ var clientConfig = webpackMerge(baseConfig, {
       manifestVariable: 'webpackManifest'
     }),
   ],
+
+  // Some libraries import Node modules but don't use them in the browser.
+  // Tell Webpack to provide empty mocks for them so importing them works.
+  // https://webpack.github.io/docs/configuration.html#node
+  // https://github.com/webpack/node-libs-browser/tree/master/mock
+  node: {
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
+  }
 });
 
 var serverConfig = webpackMerge(baseConfig, {
@@ -65,7 +80,7 @@ var serverConfig = webpackMerge(baseConfig, {
   },
 
   output: {
-    filename: '[name].js',
+    filename: 'server.js',
     path: path.resolve(__dirname, 'dist')
   }
 });
