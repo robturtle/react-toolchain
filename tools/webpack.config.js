@@ -1,4 +1,4 @@
-var path = require('path');
+import path from 'path';
 var webpack = require('webpack');
 var ManifestPlugin = require('webpack-manifest-plugin');
 var ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
@@ -7,14 +7,14 @@ var WebpackChunkHash = require('webpack-chunk-hash');
 var isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  context: path.resolve(__dirname, 'src'),
+  context: path.resolve(__dirname, '..', 'src'),
 
   entry: {
     main: './try-webpack.js'
   },
 
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '..', 'dist'),
     publicPath: '/assets/',
     filename: isProduction ? '[name].[chunkhash].js' : '[name].js',
     chunkFilename: isProduction ? '[name].[chunkhash].js' : '[name].js'
@@ -44,7 +44,7 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, '..', 'src'),
         loader: 'babel-loader'
       }
     ]

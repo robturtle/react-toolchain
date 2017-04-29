@@ -6,18 +6,6 @@
   "repository": "git@github.com:robturtle/react-toolchain.git",
   "author": "Yang Liu <jeremyrobturtle@gmail.com>",
   "license": "MIT",
-  "babel": {
-    "presets": [
-      [
-        "env",
-        {
-          "modules": false
-        }
-      ],
-      "react",
-      "stage-2"
-    ]
-  },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-loader": "^7.0.0",
@@ -25,13 +13,14 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "chunk-manifest-webpack-plugin": "^1.1.0",
+    "parallel-webpack": "^1.6.1",
     "webpack": "^2.4.1",
     "webpack-chunk-hash": "^0.4.0",
     "webpack-manifest-plugin": "^1.1.0"
   },
   "scripts": {
     "build": "babel src -d lib",
-    "bundle": "webpack",
+    "bundle": "babel-node tools/bundle.js",
     "testpath": "echo $PATH"
   },
   "dependencies": {
