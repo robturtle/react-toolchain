@@ -16,6 +16,7 @@
     "chunk-manifest-webpack-plugin": "^1.1.0",
     "debug": "^2.6.6",
     "react-hot-loader": "next",
+    "rimraf": "^2.6.1",
     "webpack": "^2.4.1",
     "webpack-chunk-hash": "^0.4.0",
     "webpack-dev-middleware": "^1.10.2",
@@ -26,11 +27,12 @@
   },
   "scripts": {
     "start": "DEBUG=tools:* babel-node tools/runner.js start",
-    "bundle": "DEBUG=tools:* babel-node tools/runner.js bundle"
+    "build": "DEBUG=tools:* babel-node tools/runner.js build"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "express": "^4.15.2",
+    "mz": "^2.6.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   }
