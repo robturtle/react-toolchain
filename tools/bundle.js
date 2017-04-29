@@ -1,6 +1,8 @@
 import webpack from 'webpack';
 import config from '../webpack.config';
 
+const debug = require('debug')('tools:bundle');
+
 const bundler = webpack(config);
 
 async function bundle() {
@@ -11,12 +13,10 @@ async function bundle() {
       } if (stats.hasErrors()) {
         return reject(stats.err);
       }
-      console.log(stats.toString({
-        colors: true
-      }))
+      debug(stats.toString({colors: true}))
       return resolve();
     })
   });
 }
 
-bundle();
+export default bundle;
