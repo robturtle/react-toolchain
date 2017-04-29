@@ -1,23 +1,37 @@
-import path from 'path';
+var path = require('path');
 var webpack = require('webpack');
+var webpackMerge = require('webpack-merge');
 var ManifestPlugin = require('webpack-manifest-plugin');
 var ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 var WebpackChunkHash = require('webpack-chunk-hash');
 
 var isProduction = process.env.NODE_ENV === 'production';
+var srcRoot = path.resolve(__dirname, 'src');
 
-module.exports = {
-  context: path.resolve(__dirname, '..', 'src'),
+var baseConfig = {
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        include: srcRoot,
+        loader: 'babel-loader'
+      }
+    ]
+  }
+};
+
+var clientConfig = webpackMerge(baseConfig, {
+  context: path.resolve(srcRoot, 'client'),
 
   entry: {
     main: './try-webpack.js'
   },
 
   output: {
-    path: path.resolve(__dirname, '..', 'dist'),
-    publicPath: '/assets/',
     filename: isProduction ? '[name].[chunkhash].js' : '[name].js',
-    chunkFilename: isProduction ? '[name].[chunkhash].js' : '[name].js'
+    chunkFilename: isProduction ? '[name].[chunkhash].js' : '[name].js',
+    path: path.resolve(__dirname, 'dist', 'public'),
+    publicPath: '/'
   },
 
   devtool: isProduction ? 'cheap-module-source-map' : 'cheap-module-eval-source-map',
@@ -39,14 +53,21 @@ module.exports = {
       manifestVariable: 'webpackManifest'
     }),
   ],
+});
 
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        include: path.resolve(__dirname, '..', 'src'),
-        loader: 'babel-loader'
-      }
-    ]
+var serverConfig = webpackMerge(baseConfig, {
+  target: 'node',
+
+  context: path.resolve(srcRoot, 'server'),
+
+  entry: {
+    server: './server.js'
+  },
+
+  output: {
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'dist')
   }
-};
+});
+
+module.exports = [clientConfig, serverConfig];

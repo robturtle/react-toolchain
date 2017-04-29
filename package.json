@@ -13,15 +13,14 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "chunk-manifest-webpack-plugin": "^1.1.0",
-    "parallel-webpack": "^1.6.1",
     "webpack": "^2.4.1",
     "webpack-chunk-hash": "^0.4.0",
-    "webpack-manifest-plugin": "^1.1.0"
+    "webpack-manifest-plugin": "^1.1.0",
+    "webpack-merge": "^4.1.0"
   },
   "scripts": {
-    "build": "babel src -d lib",
-    "bundle": "babel-node tools/bundle.js",
-    "testpath": "echo $PATH"
+    "webpack": "webpack",
+    "bundle": "babel-node tools/bundle.js"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",

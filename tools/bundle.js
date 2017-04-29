@@ -1,8 +1,22 @@
-import { run } from 'parallel-webpack';
-import path from 'path';
+import webpack from 'webpack';
+import config from '../webpack.config';
+
+const bundler = webpack(config);
 
 async function bundle() {
-  await run(path.resolve(__dirname, 'webpack.config.js'));
+  return new Promise((resolve, reject) => {
+    bundler.run((err, stats) => {
+      if (err) {
+        return reject(err);
+      } if (stats.hasErrors()) {
+        return reject(stats.err);
+      }
+      console.log(stats.toString({
+        colors: true
+      }))
+      return resolve();
+    })
+  });
 }
 
 bundle();
