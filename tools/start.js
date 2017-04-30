@@ -3,7 +3,6 @@ import webpack from 'webpack';
 import WriteFilePlugin from 'write-file-webpack-plugin';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import 'react-hot-loader';
 import webpackConfig from '../webpack.config';
 import run from './runner';
 import clean from './clean';
@@ -16,15 +15,15 @@ const debug = require('debug')('tools:start');
 
 async function start() {
   await run(clean);
-  await run(copy.bind(undefined, {watch: true}))
+  await run(copy);
 
   await new Promise(resolve => {
-    debug('patching webpack HMR');
     // Save the server-side bundle files to the file system after compilation
     // https://github.com/webpack/webpack-dev-server/issues/62
     serverConfig.plugins = serverConfig.plugins || [];
     serverConfig.plugins.push(new WriteFilePlugin({ log: false }));
 
+    debug('patching webpack HMR');
     // Hot Module Replacement + React Hot Reload
     clientConfig.entry.client = [...new Set([
       'babel-polyfill',
@@ -51,8 +50,8 @@ async function start() {
     let onBundleComplete = async () => {
       debug('Initial patching done.');
       onBundleComplete = stats => {
-        const hasErros = !stats.stats[1].compilation.errors.length;
-        if (hasErros) {
+        const success = !stats.stats[1].compilation.errors.length;
+        if (success) {
           debug('Server compiled success. Restarting the server...');
           startServer();
         }
@@ -61,7 +60,10 @@ async function start() {
       BrowserSync.create().init({
         proxy: {
           target: server.host,
-          middleware: [devMiddleware, hotMiddleware],
+          middleware: [
+            devMiddleware,
+            hotMiddleware,
+          ],
           proxyOptions: {
             xfwd: true
           }

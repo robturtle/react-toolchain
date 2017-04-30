@@ -15,24 +15,30 @@
     "browser-sync": "^2.18.8",
     "chunk-manifest-webpack-plugin": "^1.1.0",
     "debug": "^2.6.6",
+    "html-webpack-plugin": "^2.28.0",
+    "pug": "^2.0.0-beta.12",
+    "pug-loader": "^2.3.0",
     "react-hot-loader": "next",
     "rimraf": "^2.6.1",
     "webpack": "^2.4.1",
     "webpack-chunk-hash": "^0.4.0",
-    "webpack-dev-middleware": "^1.10.2",
+    "webpack-dev-middleware": "https://github.com/robturtle/webpack-dev-middleware",
     "webpack-hot-middleware": "^2.18.0",
     "webpack-manifest-plugin": "^1.1.0",
     "webpack-merge": "^4.1.0",
+    "webpack-node-externals": "^1.5.4",
     "write-file-webpack-plugin": "^4.0.2"
   },
   "scripts": {
-    "start": "DEBUG=tools:* babel-node tools/runner.js start",
-    "build": "DEBUG=tools:* babel-node tools/runner.js build"
+    "start": "DEBUG=tools:*,express:* babel-node tools/runner.js start",
+    "build": "DEBUG=tools:* babel-node tools/runner.js build",
+    "bundle": "DEBUG=tools:* babel-node tools/runner.js bundle"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "express": "^4.15.2",
     "mz": "^2.6.0",
+    "pretty-error": "^2.1.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   }
