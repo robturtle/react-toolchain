@@ -1,11 +1,10 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import Routing from './routes';
 
-const x = 3;
+ReactDOM.render(<Routing/>, document.getElementById('app'));
 
-let hello = a => console.log(`hello, ${a}`);
-
-hello(x);
-
-let jsx = <p class="st" style="color: green;">Hello, JSX!</p>;
-
-export default jsx;
+// enable HMR for this entry js file
+if (module.hot) {
+  module.hot.accept();
+}
