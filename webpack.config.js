@@ -11,6 +11,7 @@ var ManifestPlugin = require('webpack-manifest-plugin');
 var ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 var WebpackChunkHash = require('webpack-chunk-hash');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var isProduction = process.env.NODE_ENV === 'production';
 var srcRoot = path.resolve(__dirname, 'src');
@@ -50,6 +51,18 @@ var clientConfig = webpackMerge(baseConfig, {
     client: ['babel-polyfill', './try-webpack.js'],
   },
 
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader'
+        })
+      }
+    ]
+  },
+
   output: {
     filename: isProduction ? '[name].[chunkhash].js' : '[name].js',
     chunkFilename: isProduction ? '[name].[chunkhash].js' : '[name].js',
@@ -75,7 +88,9 @@ var clientConfig = webpackMerge(baseConfig, {
     // Generate index.html
     new HtmlWebpackPlugin({
       template: '!!pug-loader!src/server/layout.pug'
-    })
+    }),
+
+    new ExtractTextPlugin("styles.css"),
   ],
 
     // Some libraries import Node modules but don't use them in the browser.

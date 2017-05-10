@@ -5,11 +5,7 @@ import {
   Link
 } from 'react-router-dom';
 
-const Home = () => (
-  <div>
-    <h2>Home</h2>
-  </div>
-);
+import Home from '../components/Home';
 
 const Login = () => (
   <h2>Login</h2>
