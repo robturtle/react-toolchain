@@ -12,7 +12,9 @@ import {
 } from 'antd';
 import globalStyles from '../assets/styles/global.css';
 
-import { Layout, Menu, Home } from '../components';
+import { Layout, Menu } from '../components';
+import { Home } from '../containers';
+
 
 const Login = () => (
   <h2>Login</h2>
