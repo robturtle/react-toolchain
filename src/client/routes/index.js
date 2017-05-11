@@ -1,11 +1,18 @@
 import React from 'react';
 import {
   BrowserRouter as Router,
+  Switch,
   Route,
-  Link
+  Link,
+  withRouter,
 } from 'react-router-dom';
+import {
+  Row,
+  Col,
+} from 'antd';
+import globalStyles from '../assets/styles/global.css';
 
-import Home from '../components/Home';
+import { Layout, Menu, Home } from '../components';
 
 const Login = () => (
   <h2>Login</h2>
@@ -19,27 +26,26 @@ const Search = () => (
   <h2>Search</h2>
 );
 
+const NavMenu = withRouter(({ history }) => (
+  <Menu onClick={item => history.push(item.key)} />
+));
+
 const Routing = () => (
   <Router>
-    <div>
-      <header>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/login">Login</Link></li>
-          <li><Link to="/signup">Signup</Link></li>
-          <li><Link to="/search">Search</Link></li>
-        </ul>
-        <Route path="/search" component={Search}/>
-      </header>
-
-      <hr/>
-
-      <main>
-        <Route exact path="/" component={Home}/>
-        <Route path="/login" component={Login}/>
-        <Route path="/signup" component={Signup}/>
-      </main>
-    </div>
+    <Layout
+      header={<NavMenu/>}
+      content={(
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route render={({ match }) => (<p>No match</p>)} />
+        </Switch>
+      )}
+      footer={(
+        <p>Footer</p>
+      )}
+    />
   </Router>
 );
 

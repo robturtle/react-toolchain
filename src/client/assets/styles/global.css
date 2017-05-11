@@ -1,0 +1,9 @@
+/* http://jimthedev.com/2016/07/28/using-google-fonts-in-webpack-and-react/ */
+@font-face {
+  font-family: 'Lobster';
+  src: url('../fonts/lobster-v18-latin-regular.woff') format('woff'); /* Modern */
+  src: local('Open Sans'), local('OpenSans'),
+       url('../fonts/lobster-v18-latin-regular.woff2') format('woff2'), /* Super Modern */
+       url('../fonts/lobster-v18-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/lobster-v18-latin-regular.svg#OpenSans') format('svg'), /* Legacy iOS */
+}
