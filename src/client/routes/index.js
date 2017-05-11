@@ -32,6 +32,8 @@ const NavMenu = withRouter(({ history }) => (
   <Menu onClick={item => history.push(item.key)} />
 ));
 
+function TODO(props) { return <p>Not Implemented!</p>; }
+
 const Routing = () => (
   <Router>
     <Layout
@@ -41,6 +43,10 @@ const Routing = () => (
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route path="/user/:username" render={TODO}/>
+          <Route path="/project/:pid" component={TODO}/>
+          <Route path="/city/:cname" component={TODO}/>
+          <Route path="/due/:date" component={TODO}/>
           <Route render={({ match }) => (<p>No match</p>)} />
         </Switch>
       )}

@@ -1,0 +1,24 @@
+.img {
+  height: 144px;
+  background-size: cover;
+}
+
+.imgLeft {
+  height: 56px;
+  padding-top: 10px;
+}
+
+.title {
+  height: 48px;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+}
+
+.titleText {
+  font-weight: bold;
+}
+
+.titleLeft {
+  height: 152px;
+  padding-top: 10px;
+}

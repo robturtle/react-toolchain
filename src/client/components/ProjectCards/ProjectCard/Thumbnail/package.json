@@ -1,0 +1,6 @@
+{
+  "name": "card-title",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Thumbnail.js"
+}

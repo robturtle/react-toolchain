@@ -29,14 +29,16 @@ class PagedProjectCards extends React.Component {
       <div>
         <ProjectCards
           projects={this.props.projects}
-          windowWidth={this.props.projects}
+          windowWidth={this.props.windowWidth}
         />
-        <Pagination
-          onChange={loadPage}
-          current={this.props.page}
-          pageSize={this.props.pageSize}
-          total={this.props.pageTotal}
-        />
+        {this.props.pageTotal > this.props.pageSize ? (
+          <Pagination
+            onChange={loadPage}
+            current={this.props.page}
+            pageSize={this.props.pageSize}
+            total={this.props.pageTotal}
+          />
+        ) : <p/>}
       </div>
     );
   }
