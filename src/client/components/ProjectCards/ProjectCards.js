@@ -9,27 +9,33 @@ import s from './ProjectCards.css';
 const CARDS_PER_ROW = 3;
 const CARD_SPAN = 24 / CARDS_PER_ROW;
 
-const ProjectRow = ({ projects }) => (
+const ProjectRow = ({ loading, projects }) => (
   <Row gutter={16} className={s.row}>
     {projects.map((p, i) => (
       <Col span={CARD_SPAN} key={i}>
-        <Card project={p}/>
+        <Card loading={loading} project={p}/>
       </Col>
     ))}
   </Row>
 );
 
-const GridCards = ({ projects }) => {
+const GridCards = ({ loading, projects }) => {
   const rows = [];
-  const len = projects.length;
+  const len = projects ? projects.length : 30;
   for (let i = 0; i < len; i += CARDS_PER_ROW) {
     const slice = [];
     for (let j = 0; j < 3; j++) {
       if (i + j < len) {
-        slice.push(projects[i + j]);
+        if (projects) {
+          slice.push(projects[i + j]);
+        } else {
+          slice.push({
+            title: 'loading...'
+          })
+        }
       }
     }
-    rows.push(<ProjectRow projects={slice}/>);
+    rows.push(<ProjectRow loading={loading} projects={slice}/>);
   }
   return (
     <div>
@@ -40,20 +46,28 @@ const GridCards = ({ projects }) => {
   );
 };
 
-const SingleColumnCards = ({ projects }) => (
+const SingleColumnCards = ({ loading, projects }) => (
   <div>
     {projects.map((p, i) => (
-      <Card project={p} key={i} className={s.row}/>
+      <Card loading={loading} project={p} key={i} className={s.row}/>
     ))}
   </div>
 );
 
-const ProjectCards = ({ projects, windowWidth }) => (
-  windowWidth && windowWidth < 700 ? (
-    <SingleColumnCards projects={projects}/>
-  ) : (
-    <GridCards projects={projects}/>
+const ProjectCards = ({ projects, windowWidth }) => {
+  return (
+    windowWidth && windowWidth < 700 ? (
+      <SingleColumnCards
+        loading={projects === undefined}
+        projects={projects}
+      />
+    ) : (
+      <GridCards
+        loading={projects === undefined}
+        projects={projects}
+      />
+    )
   )
-);
+};
 
 export default ProjectCards;

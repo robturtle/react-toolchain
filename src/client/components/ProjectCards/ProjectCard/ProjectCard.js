@@ -4,9 +4,9 @@ import {
 } from 'antd';
 import s from './ProjectCard.css';
 
-const ProjectCard = ({ project }) => (
+const ProjectCard = ({ loading, project }) => (
   project ? (
-    <Card title={project.title} className={s.card}>
+    <Card loading={loading} title={project.title} className={s.card}>
       {project.contents}
     </Card>
   ) : (

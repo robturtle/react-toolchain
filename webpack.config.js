@@ -118,7 +118,7 @@ var clientConfig = webpackMerge(baseConfig, {
   context: path.resolve(srcRoot, 'client'),
 
   entry: {
-    client: ['babel-polyfill', './try-webpack.js'],
+    client: ['babel-polyfill', './index.js'],
   },
 
   module: {
