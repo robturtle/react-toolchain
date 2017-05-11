@@ -1,6 +1,7 @@
 import path from 'path';
 import express from 'express';
 import PrettyError from 'pretty-error';
+import api from './api';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const app = express();
@@ -16,6 +17,10 @@ global.navigator.userAgent = global.navigator.userAgent || 'all';
 app.use(express.static(path.join(__dirname, 'public')));
 // TODO cookie parser
 // TODO body parser
+
+// API
+// ----------------------------------------------------------------------
+app.use('/api', api);
 
 if (!isProduction) {
   app.enable('trust proxy');
@@ -36,10 +41,4 @@ app.use((error, req, res, next) => {
 app.listen(8888, () => {
   // meet the convention in tools/startServer.js
   console.log('Server started on http://localhost:8888/');
-});
-
-app._router.stack.forEach(function(r){
-  if (r.route && r.route.path){
-    console.log(r.route.path)
-  }
 });
