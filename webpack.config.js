@@ -23,7 +23,77 @@ var baseConfig = {
         test: /\.jsx?$/,
         include: srcRoot,
         loader: 'babel-loader',
-      }
+      },
+
+      {
+        test: /\.eot(\?\S*)?$/,
+        include: srcRoot,
+        use: [{
+          loader: 'url-loader',
+        }],
+      },
+
+      {
+        test: /\.otf(\?\S*)?$/,
+        include: srcRoot,
+        use: [{
+          loader: 'url-loader',
+        }],
+      },
+
+      {
+        test: /\.svg(\?\S*)?$/,
+        include: srcRoot,
+        use: [{
+          loader: 'url-loader',
+          options: { mimetype: 'image/svg+xml' }
+        }],
+      },
+
+      {
+        test: /\.ttf(\?\S*)?$/,
+        include: srcRoot,
+        use: [{
+          loader: 'url-loader',
+          options: { mimetype: 'application/octet-stream' }
+        }],
+      },
+
+      {
+        test: /\.woff2?(\?\S*)?$/,
+        include: srcRoot,
+        use: [{
+          loader: 'url-loader',
+          options: { mimetype: 'application/font-woff' }
+        }],
+      },
+
+      {
+        test: /\.(jpe?g|png|gif)$/,
+        include: srcRoot,
+        use: [
+          {
+            loader: 'url-loader',
+          }
+        ],
+      },
+
+      {
+        test: /\.less$/,
+        // TODO: use extractTextPlugin for default styles
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'less-loader',
+          }
+        ]
+      },
+
     ]
   },
 
@@ -55,10 +125,24 @@ var clientConfig = webpackMerge(baseConfig, {
     rules: [
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        })
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              // css-loader
+              sourceMap: !isProduction,
+              // CSS modules
+              modules: true,
+              localIdentName: isProduction ? '[hash:base64:5]' : '[name]-[local]-[hash:base64:5]',
+              // CSS Nano
+              minimize: isProduction,
+              discardComments: { removeAll: true }
+            }
+          }
+        ]
       }
     ]
   },
