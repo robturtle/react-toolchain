@@ -47,6 +47,7 @@
   "dependencies": {
     "antd": "^2.10.0",
     "babel-polyfill": "^6.23.0",
+    "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "isomorphic-fetch": "^2.2.1",
     "mz": "^2.6.0",

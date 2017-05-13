@@ -1,0 +1,32 @@
+.like {
+  position: absolute;
+  z-index: 1;
+  display: inline-block;
+  top: 20px;
+  left: 85%;
+  transition: all 500ms;
+  font-size: 20px;
+}
+
+.liked {
+  position: absolute;
+  z-index: 1;
+  display: inline-block;
+  top: 20px;
+  left: 85%;
+  transition: all 500ms;
+  font-size: 20px;
+  color: red;
+}
+
+.like:hover {
+  cursor: pointer;
+  color: red;
+  font-size: 22px;
+}
+
+.liked:hover {
+  cursor: pointer;
+  color: black;
+  font-size: 22px;
+}

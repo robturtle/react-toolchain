@@ -1,0 +1,12 @@
+.nothing {
+  height: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
+  border-radius: 8px;
+  line-height: 400px;
+  text-align: center;
+  font-size: 30px;
+  color: #ddd;
+  margin-bottom: 10px;
+}

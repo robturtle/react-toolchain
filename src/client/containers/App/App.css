@@ -1,0 +1,11 @@
+.content {
+  margin: 10px 50px;
+}
+
+.container {
+  height: 100%;
+  min-height: 500px;
+  max-width: 1040px;
+  margin-right: auto;
+  margin-left: auto;
+}

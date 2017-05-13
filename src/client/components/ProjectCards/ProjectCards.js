@@ -1,41 +1,35 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {
   Row,
   Col,
 } from 'antd';
-import Card from './ProjectCard';
+import Card from '../ProjectCard';
 import s from './ProjectCards.css';
 
 const CARDS_PER_ROW = 3;
 const CARD_SPAN = 24 / CARDS_PER_ROW;
 
-const ProjectRow = ({ loading, projects }) => (
+const ProjectRow = ({ data, onLiked }) => (
   <Row gutter={16} className={s.row}>
-    {projects.map((p, i) => (
-      <Col span={CARD_SPAN} key={i}>
-        <Card loading={loading} project={p}/>
+    {data.map((p, i) => (
+      <Col span={CARD_SPAN} key={p.pid}>
+        <Card project={p} onLiked={onLiked} />
       </Col>
     ))}
   </Row>
 );
 
-const GridCards = ({ loading, projects }) => {
+const GridCards = ({ data, onLiked }) => {
   const rows = [];
-  const len = projects ? projects.length : 30;
+  const len = data.length;
   for (let i = 0; i < len; i += CARDS_PER_ROW) {
     const slice = [];
     for (let j = 0; j < 3; j++) {
       if (i + j < len) {
-        if (projects) {
-          slice.push(projects[i + j]);
-        } else {
-          slice.push({
-            title: 'loading...'
-          })
-        }
+        slice.push(data[i + j]);
       }
     }
-    rows.push(<ProjectRow loading={loading} projects={slice}/>);
+    rows.push(<ProjectRow data={slice} onLiked={onLiked} />);
   }
   return (
     <div>
@@ -46,28 +40,33 @@ const GridCards = ({ loading, projects }) => {
   );
 };
 
-const SingleColumnCards = ({ loading, projects }) => (
+const SingleColumnCards = ({ data, onLiked }) => (
   <div>
-    {projects.map((p, i) => (
-      <Card loading={loading} project={p} key={i} className={s.row}/>
+    {data.map((p, i) => (
+      <Card project={p} key={p.pid} className={s.row} onLiked={onLiked}/>
     ))}
   </div>
 );
 
-const ProjectCards = ({ projects, windowWidth }) => {
+const ProjectCards = ({ data, windowWidth, onLiked }) => {
+  const showData = data || [];
   return (
     windowWidth && windowWidth < 700 ? (
       <SingleColumnCards
-        loading={projects === undefined}
-        projects={projects}
+        data={showData} onLiked={onLiked}
       />
     ) : (
       <GridCards
-        loading={projects === undefined}
-        projects={projects}
+        data={showData} onLiked={onLiked}
       />
     )
   )
+};
+
+ProjectCards.propTypes = {
+  data: PropTypes.array,
+  windowWidth: PropTypes.number,
+  onLiked: PropTypes.func,
 };
 
 export default ProjectCards;

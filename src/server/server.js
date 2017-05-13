@@ -2,6 +2,7 @@ import path from 'path';
 import express from 'express';
 import PrettyError from 'pretty-error';
 import api from './api';
+import bodyParser from 'body-parser';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const app = express();
@@ -14,17 +15,23 @@ global.navigator.userAgent = global.navigator.userAgent || 'all';
 
 // Middlewares
 // ----------------------------------------------------------------------
-app.use(express.static(path.join(__dirname, 'public')));
-// TODO cookie parser
-// TODO body parser
-
-// API
-// ----------------------------------------------------------------------
-app.use('/api', api);
-
 if (!isProduction) {
   app.enable('trust proxy');
 }
+
+// Routings
+// ----------------------------------------------------------------------
+app.use(express.static(path.join(__dirname, 'public')));
+// TODO cookie parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use('/api', api);
+
+// Let React Router do the rest
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
 
 // Error handling
 // ----------------------------------------------------------------------

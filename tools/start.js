@@ -23,6 +23,8 @@ async function start() {
     serverConfig.plugins = serverConfig.plugins || [];
     serverConfig.plugins.push(new WriteFilePlugin({ log: false }));
 
+    clientConfig.plugins.push(new WriteFilePlugin({ log: false }));
+
     debug('patching webpack HMR');
     // Hot Module Replacement + React Hot Reload
     clientConfig.entry.client = [...new Set([
