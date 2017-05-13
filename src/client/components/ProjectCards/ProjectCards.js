@@ -9,17 +9,17 @@ import s from './ProjectCards.css';
 const CARDS_PER_ROW = 3;
 const CARD_SPAN = 24 / CARDS_PER_ROW;
 
-const ProjectRow = ({ data, onLiked }) => (
+const ProjectRow = ({ data, Like, authUser }) => (
   <Row gutter={16} className={s.row}>
     {data.map((p, i) => (
       <Col span={CARD_SPAN} key={p.pid}>
-        <Card project={p} onLiked={onLiked} />
+        <Card project={p} Like={Like} authUser={authUser} />
       </Col>
     ))}
   </Row>
 );
 
-const GridCards = ({ data, onLiked }) => {
+const GridCards = ({ data, Like, authUser }) => {
   const rows = [];
   const len = data.length;
   for (let i = 0; i < len; i += CARDS_PER_ROW) {
@@ -29,7 +29,9 @@ const GridCards = ({ data, onLiked }) => {
         slice.push(data[i + j]);
       }
     }
-    rows.push(<ProjectRow data={slice} onLiked={onLiked} />);
+    rows.push(
+      <ProjectRow data={slice} Like={Like} authUser={authUser} />
+    );
   }
   return (
     <div>
@@ -40,24 +42,26 @@ const GridCards = ({ data, onLiked }) => {
   );
 };
 
-const SingleColumnCards = ({ data, onLiked }) => (
+const SingleColumnCards = ({ data, Like }) => (
   <div>
     {data.map((p, i) => (
-      <Card project={p} key={p.pid} className={s.row} onLiked={onLiked}/>
+      <Card project={p} key={p.pid} className={s.row} Like={Like}/>
     ))}
   </div>
 );
 
-const ProjectCards = ({ data, windowWidth, onLiked }) => {
+const ProjectCards = ({ data, windowWidth, Like, authUser }) => {
   const showData = data || [];
   return (
     windowWidth && windowWidth < 700 ? (
       <SingleColumnCards
-        data={showData} onLiked={onLiked}
+        data={showData} Like={Like}
+        authUser={authUser}
       />
     ) : (
       <GridCards
-        data={showData} onLiked={onLiked}
+        data={showData} Like={Like}
+        authUser={authUser}
       />
     )
   )
@@ -66,7 +70,6 @@ const ProjectCards = ({ data, windowWidth, onLiked }) => {
 ProjectCards.propTypes = {
   data: PropTypes.array,
   windowWidth: PropTypes.number,
-  onLiked: PropTypes.func,
 };
 
 export default ProjectCards;

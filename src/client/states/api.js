@@ -3,6 +3,7 @@ import { sendFetch } from './fetch';
 export const host = `http://${window.location.host}`;
 export const targets = {
   'projects': `${host}/api/projects`,
+  'likes': `${host}/api/likes`,
   'likeProject': `${host}/api/like`,
 };
 

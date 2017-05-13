@@ -3,17 +3,15 @@ import s from './ProjectCard.css';
 import {
   Card,
 } from 'antd';
-import Like from './Like';
 import Thumbnail from './Thumbnail';
 import Status from './Status';
 
-const ProjectCard = ({ project, onLiked }) => {
+const ProjectCard = ({ project, authUser, Like }) => {
   const {
     pid,
     title,
     description,
-    liked,
-    username,
+    owner,
     city,
     due,
     fund,
@@ -22,9 +20,13 @@ const ProjectCard = ({ project, onLiked }) => {
   return project ? (
         <Card className={s.card}>
           <Thumbnail title={title} contents={description} pid={pid} />
-          <Like liked={liked} onLiked={onLiked} pid={pid} />
+          {
+            authUser ? (
+              <Like />
+            ) : <span/>
+          }
           <Status
-            user={{home: `/users/${username}`, username }}
+            user={{home: `/users/${owner}`, owner }}
             project={{home: `/city/${city}`, due, city }}
             current={fund}
             goal={maxFund}
@@ -37,7 +39,6 @@ const ProjectCard = ({ project, onLiked }) => {
 
 ProjectCard.propTypes = {
   project: PropTypes.object,
-  onLiked: PropTypes.func,
 };
 
 export default ProjectCard;

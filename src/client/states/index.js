@@ -4,6 +4,7 @@ import { auth } from './auth';
 
 import { menu } from './menu';
 import { pagination } from './pagination';
+import { message } from './message';
 
 import { projects } from './projects';
 
@@ -15,6 +16,7 @@ export default combineReducers({
 
   menu,
   pagination,
+  message,
 
   projects,
 

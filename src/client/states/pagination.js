@@ -31,13 +31,13 @@ export const pagination = (state = {
       return Object.assign({}, state, {
         current: action.current,
         from: (action.current - 1) * state.pageSize,
-        to: action.current * state.pageSize - 1,
+        to: action.current * state.pageSize,
       });
     case CHANGE_PAGE_SIZE:
       return Object.assign({}, state, {
         pageSize: action.pageSize,
         from: (state.current - 1) * action.pageSize,
-        to: state.current * action.pageSize - 1,
+        to: state.current * action.pageSize,
       });
     case CHANGE_PAGE_TOTAL:
       return Object.assign({}, state, {

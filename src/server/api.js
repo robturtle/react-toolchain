@@ -1,46 +1,51 @@
 import { Router } from "express";
+import { query } from './db';
 
 const router = Router();
 
-router.get("/projects", (req, res) => {
+router.get("/projects", async (req, res) => {
+  let projects = {
+    rowCount: 0,
+    rows: []
+  };
+  try {
+    projects = await query(
+      `SELECT pid, title, description, owner, city, due, fund, maxFund
+       FROM crowd_funding.project_overview`
+    );
+  } catch (err) {
+    console.log(`ERROR: ${err}`);
+  }
+  console.log(projects.rows[0])
   res.json({
-    total: 200,
-    data: [
-      {
-        pid: '1',
-        title: 'Project A',
-        description: 'A great project',
-        liked: false,
-        city: 'NYC',
-        username: 'Alice',
-        due: '2017-05-12',
-        fund: '32000',
-        maxFund: '65000',
-      },
-      {
-        pid: '2',
-        title: 'Project B',
-        description: 'B great project',
-        liked: true,
-        city: 'CA',
-        username: 'Bob',
-        due: '2017-05-14',
-        fund: '180000',
-        maxFund: '3600000',
-      },
-    ],
+    total: projects.rowCount,
+    data: projects.rows,
   });
 });
 
-router.post('/like', (req, res) => {
-  console.log(`received liked: ${req.body.body}`);
-  const { pid, liked } = req.body.data;
-  res.json({ pid, liked: !liked });
+router.get("/likes", async (req, res) => {
+  // get uname from session
+  let likes = [];
+  try {
+    likes = await query(
+      `SELECT pid FROM crowd_funding.like_proj WHERE uname=$1`,
+      ['yangliu']
+    );
+    likes = likes.rows.map(r => r.pid);
+  } catch (err) {
+    console.log(`ERROR: ${err}`)
+  }
+  res.json(likes);
 });
 
-router.post('*', (req, res) => {
+router.post('*', (req, res, next) => {
   console.log('received post ' + JSON.stringify(req.body, null, 2));
-  res.json({ data: req.body })
+  next();
+});
+
+router.post('/like', (req, res) => {
+  const { pid, liked } = req.body.data;
+  res.json({ pid, liked: !liked });
 });
 
 router.get('*', (req, res) => {

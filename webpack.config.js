@@ -196,7 +196,7 @@ var serverConfig = webpackMerge(baseConfig, {
   context: path.resolve(srcRoot, 'server'),
 
   entry: {
-    server: './server.js'
+    server: ['babel-polyfill', './server.js']
   },
 
   output: {

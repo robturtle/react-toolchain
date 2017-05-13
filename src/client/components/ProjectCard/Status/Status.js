@@ -21,7 +21,7 @@ const Status = ({ user, project, current, goal }) => {
           <li>
             <Icon type="user" className={s.icon} />
             <a href={user.home}>
-              {user.username}
+              {user.owner}
             </a>
           </li>
 

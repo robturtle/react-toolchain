@@ -11,8 +11,8 @@ const Like = ({ liked, onLiked, pid }) => (
 );
 
 Like.propTypes = {
-  pid: PropTypes.string.isRequired,
-  liked: PropTypes.bool.isRequired,
+  pid: PropTypes.number.isRequired,
+  liked: PropTypes.bool,
   onLiked: PropTypes.func,
 };
 

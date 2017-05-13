@@ -9,23 +9,23 @@ import { sendFetch } from '../states/fetch';
 
 import Paginated from './Pagination';
 import Fetcher from './Fetcher';
+import Like from './Like';
 
 import ProjectCards from '../components/ProjectCards';
 
 const mountPoint = 'projects';
 const url = targets['projects'];
 
-const dispatchToStates = dispatch => ({
-  onLiked: likeProject(dispatch),
-});
-
-const Cards = connect(null, dispatchToStates)(ProjectCards);
-
-export default (props) => (
+export default ({ authUser }) => (
   <div>
     <Paginated url={url} mountPoint={mountPoint}>
-      <Cards />
+      <ProjectCards Like={Like} />
     </Paginated>
     <Fetcher url={url} mountPoint={mountPoint} />
+    {
+      authUser ? (
+        <Fetcher url={targets['likes']} mountPoint='likes' />
+      ) : <span />
+    }
   </div>
 );
