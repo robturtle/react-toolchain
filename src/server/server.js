@@ -46,9 +46,10 @@ app.get('/db', function (request, response) {
   });
 });
 
-app.listen(8888, () => {
+let port = process.env.PORT || 8888;
+app.listen(port, () => {
   // meet the convention in tools/startServer.js
-  console.log('Server started on http://localhost:8888/');
+  console.log(`Server started on http://localhost:${port}/`);
 });
 
 app._router.stack.forEach(function(r){

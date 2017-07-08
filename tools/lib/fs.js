@@ -79,6 +79,5 @@ export default {
   mkdir,
   movedir,
   copydir,
-  movedir,
   cleandir,
 };

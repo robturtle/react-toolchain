@@ -8,6 +8,7 @@ const root = path.resolve(__dirname, '..');
 async function copy() {
   await mkdir(path.resolve(root, 'dist'));
   await Promise.all([
+    writeFile(path.resolve(root, 'dist/Procfile'), 'web: node server.js\n'),
     writeFile(path.resolve(root, 'dist/package.json'), JSON.stringify({
       private: true,
       engines: pkg.engines || {},
@@ -16,7 +17,7 @@ async function copy() {
         start: 'node server.js'
       }
     }, null, 2)),
-    copydir(path.resolve(root, 'public'), path.resolve(root, 'dist/public'))
+    copydir(path.resolve(root, 'public'), path.resolve(root, 'dist/public')),
   ]);
 
   if (process.argv.includes('--watch')) {

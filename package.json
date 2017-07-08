@@ -32,7 +32,8 @@
   "scripts": {
     "start": "DATABASE_URL=\"postgres:///$(whoami)\" DEBUG=tools:*,express:* babel-node tools/runner.js start",
     "build": "DEBUG=tools:* babel-node tools/runner.js build",
-    "bundle": "DEBUG=tools:* babel-node tools/runner.js bundle"
+    "bundle": "DEBUG=tools:* babel-node tools/runner.js bundle",
+    "deploy": "DEBUG=tools:* babel-node tools/runner.js deploy"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
