@@ -22,6 +22,8 @@ async function start() {
     // https://github.com/webpack/webpack-dev-server/issues/62
     serverConfig.plugins = serverConfig.plugins || [];
     serverConfig.plugins.push(new WriteFilePlugin({ log: false }));
+    // save client files for debuggins
+    clientConfig.plugins.push(new WriteFilePlugin({ log: false }));
 
     debug('patching webpack HMR');
     // Hot Module Replacement + React Hot Reload
