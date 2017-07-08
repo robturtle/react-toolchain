@@ -30,7 +30,7 @@
     "write-file-webpack-plugin": "^4.0.2"
   },
   "scripts": {
-    "start": "DEBUG=tools:*,express:* babel-node tools/runner.js start",
+    "start": "DATABASE_URL=\"postgres:///$(whoami)\" DEBUG=tools:*,express:* babel-node tools/runner.js start",
     "build": "DEBUG=tools:* babel-node tools/runner.js build",
     "bundle": "DEBUG=tools:* babel-node tools/runner.js bundle"
   },
@@ -38,6 +38,7 @@
     "babel-polyfill": "^6.23.0",
     "express": "^4.15.2",
     "mz": "^2.6.0",
+    "pg": "^6.4.0",
     "pretty-error": "^2.1.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"

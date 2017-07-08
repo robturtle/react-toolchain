@@ -33,6 +33,19 @@ app.use((error, req, res, next) => {
   res.send(err);
 });
 
+var pg = require('pg');
+
+//pg.defaults.ssl = true;
+app.get('/db', function (request, response) {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    client.query('select * from test_table', function(err, result) {
+      done();
+      if (err) { console.error(err); response.send("[ERROR] " + err); }
+      else { response.send(JSON.stringify(result.rows)); }
+    });
+  });
+});
+
 app.listen(8888, () => {
   // meet the convention in tools/startServer.js
   console.log('Server started on http://localhost:8888/');
