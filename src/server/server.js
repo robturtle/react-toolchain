@@ -1,6 +1,7 @@
 import path from 'path';
 import express from 'express';
 import PrettyError from 'pretty-error';
+import { DATABASE_URL } from '../config/config';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const app = express();
@@ -37,7 +38,7 @@ var pg = require('pg');
 
 //pg.defaults.ssl = true;
 app.get('/db', function (request, response) {
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+  pg.connect(DATABASE_URL, function(err, client, done) {
     client.query('select * from test_table', function(err, result) {
       done();
       if (err) { console.error(err); response.send("[ERROR] " + err); }
