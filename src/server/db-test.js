@@ -1,10 +1,9 @@
 const DATABASE_URL = require('../config/config').DATABASE_URL;
-const Client = require('pg').Client;
+const Sequelize = require('sequelize');
 
-const client = new Client(DATABASE_URL);
-client.connect();
-client.query('select * from test_table', (err, result) => {
-  if (err) console.error(err);
-  else console.log(JSON.stringify(result.rows));
-  client.end();
-});
+const sequelize = new Sequelize(DATABASE_URL);
+
+sequelize.authenticate()
+  .then(() => console.log('DB connected!'))
+  .then(() => sequelize.close())
+  .catch(e => console.error(e));
