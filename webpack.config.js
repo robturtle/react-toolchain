@@ -56,8 +56,6 @@ var clientConfig = webpackMerge(baseConfig, {
     publicPath: '/',
   },
 
-  devtool: isProduction ? 'cheap-module-source-map' : 'cheap-module-eval-source-map',
-
   plugins: [
     // Libraries splitting
     new webpack.optimize.CommonsChunkPlugin({
@@ -65,6 +63,10 @@ var clientConfig = webpackMerge(baseConfig, {
       minChunks: function (module) {
         return module.context && module.context.indexOf('node_modules') !== -1;
       }
+    }),
+    new webpack.SourceMapDevToolPlugin({
+      filename: '[file].map',
+      exclude: ['vendor.js'],
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest'
