@@ -28,13 +28,11 @@ const pe = new PrettyError();
 pe.skipNodeFiles();
 pe.skipPackage('express');
 
-app.use((error, req, res, next) => {
+app.use((err, req, res, next) => {
   console.error(pe.render(err));
   res.status(err.status || 500);
   res.send(err);
 });
-
-var pg = require('pg');
 
 models.sync()
   .then(() => console.log('models sync success.'))
