@@ -1,7 +1,7 @@
 import path from 'path';
 import express from 'express';
 import PrettyError from 'pretty-error';
-import { DATABASE_URL } from '../config/config';
+import models from '../model';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const app = express();
@@ -36,16 +36,9 @@ app.use((error, req, res, next) => {
 
 var pg = require('pg');
 
-//pg.defaults.ssl = true;
-app.get('/db', function (request, response) {
-  pg.connect(DATABASE_URL, function(err, client, done) {
-    client.query('select * from test_table', function(err, result) {
-      done();
-      if (err) { console.error(err); response.send("[ERROR] " + err); }
-      else { response.send(JSON.stringify(result.rows)); }
-    });
-  });
-});
+models.sync()
+  .then(() => console.log('models sync success.'))
+  .catch(err => console.error(err.stack));
 
 let port = process.env.PORT || 8888;
 app.listen(port, () => {
