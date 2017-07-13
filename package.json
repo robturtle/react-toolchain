@@ -1,5 +1,8 @@
 {
   "name": "react-toolchain",
+  "engines": {
+    "node": "6.11.1"
+  },
   "version": "0.1.0",
   "description": "A demonstration of React toolchain",
   "main": "index.js",
