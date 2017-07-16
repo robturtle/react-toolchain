@@ -2,12 +2,6 @@ import Sequelize from 'sequelize';
 import connection from './connection';
 
 const User = connection.define('user', {
-  id: {
-    type: Sequelize.UUID,
-    defaultValue: Sequelize.UUIDV1,
-    primaryKey: true,
-  },
-
   email: {
     type: Sequelize.STRING,
     validate: {
@@ -27,7 +21,7 @@ const User = connection.define('user', {
     validate: {
       is: /^[a-z0-9_]+$/,
     },
-    unique: true,
+    primaryKey: true,
     allowNull: false,
   },
 

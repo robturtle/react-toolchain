@@ -3,7 +3,7 @@ import Sequelize from 'sequelize';
 
 const Activate = connection.define('activate', {
   user: {
-    type: Sequelize.UUID,
+    type: Sequelize.STRING,
     primaryKey: true,
   },
 

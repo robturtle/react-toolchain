@@ -4,7 +4,7 @@ import Sequelize from 'sequelize';
 
 const ActivatePreset = connection.define('activatePreset', {
   user: {
-    type: Sequelize.UUID,
+    type: Sequelize.STRING,
     primaryKey: true,
   },
 

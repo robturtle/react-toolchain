@@ -30,7 +30,7 @@ const Snippet = connection.define('snippet', {
   },
 
   author: {
-    type: Sequelize.UUID,
+    type: Sequelize.STRING,
     unique: 'authorScopeName',
     allowNull: false,
   },
@@ -54,6 +54,12 @@ const Snippet = connection.define('snippet', {
       ],
     },
   ],
+
+  getterMethods: {
+    qualifiedName() {
+      return `${this.author}/${this.scope}/${this.name}`;
+    }
+  },
 });
 
 export default Snippet;

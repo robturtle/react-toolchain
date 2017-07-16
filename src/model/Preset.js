@@ -15,7 +15,7 @@ const Preset = connection.define('preset', {
   },
 
   author: {
-    type: Sequelize.UUID,
+    type: Sequelize.STRING,
     unique: 'nameAuthor',
     allowNull: false,
   },
