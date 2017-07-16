@@ -35,6 +35,7 @@
     "write-file-webpack-plugin": "^4.0.2"
   },
   "scripts": {
+    "postinstall": "tools/install-git-hooks.sh",
     "start": "DEBUG=tools:*,express:* babel-node tools/runner.js start",
     "prestart": "npm run lint",
     "build": "DEBUG=tools:* babel-node tools/runner.js build",
