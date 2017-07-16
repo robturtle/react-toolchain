@@ -41,7 +41,9 @@
     "build": "DEBUG=tools:* babel-node tools/runner.js build",
     "bundle": "DEBUG=tools:* babel-node tools/runner.js bundle",
     "deploy": "DEBUG=tools:* babel-node tools/runner.js deploy",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "devdb": "config/dev-db.sh",
+    "syncdb": "DEBUG=tools:* babel-node --presets=env tools/runner.js syncDatabase"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
