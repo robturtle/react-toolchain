@@ -1,44 +1,84 @@
 import connection from './connection';
 import User from './User';
 import UserLogin from './UserLogin';
-import UserProfile from './UserProfile';
 import Scope from './Scope';
 import Snippet from './Snippet';
+import Preset from './Preset';
 
+// Accounts
 User.hasMany(UserLogin, {
   as: 'logins',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
 });
 
-User.hasOne(UserProfile, {
-  as: 'profile',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
+// Snippet ownership
+User.hasMany(Snippet, {
+  as: 'snippets',
+  foreignKey: 'author',
 });
 
-Scope.belongsTo(Scope, {
-  as: 'parent',
-  foreignKey: 'parentScope',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
+User.hasMany(Preset, {
+  as: 'presets',
+  foreignKey: 'author',
 });
 
-Snippet.belongsTo(Scope, {
-  as: 'scope',
-  onUpdate: 'cascade',
-  onDelete: 'cascade',
+Snippet.belongsToMany(Preset, {
+  as: 'presets',
+  foreignKey: 'collected',
+  through: 'collect',
+});
+Preset.belongsToMany(Snippet, {
+  as: 'snippets',
+  foreignKey: 'collector',
+  through: 'collect',
+});
+
+// Scopes
+Scope.hasMany(Snippet, {
+  as: 'snippets',
+  foreignKey: 'scope',
+});
+
+// Forking
+Snippet.belongsTo(Snippet, {
+  foreignKey: 'upstream',
+});
+
+// Using snippets
+Snippet.belongsToMany(User, {
+  as: 'usingUsers',
+  foreignKey: 'snippet',
+  through: 'activate',
+});
+User.belongsToMany(Snippet, {
+  as: 'usingSnippets',
+  foreignKey: 'user',
+  through: 'activate',
+});
+
+Preset.belongsToMany(User, {
+  as: 'usingUsers',
+  foreignKey: 'user',
+  through: 'activatePreset',
+});
+User.belongsToMany(Preset, {
+  as: 'usingPresets',
+  foreignKey: 'preset',
+  through: 'activatePreset',
 });
 
 function sync(...args) {
   return connection.sync(...args);
 }
 
-export default { sync };
+export default {
+  sync,
+  close: () => connection.close(),
+};
+
 export {
   User,
   UserLogin,
-  UserProfile,
   Scope,
   Snippet,
+  Preset,
 };

@@ -2,7 +2,8 @@
 import model from '../src/model';
 
 function syncDatabase() {
-  return model.sync({ force: true });
+  return model.sync({ force: true })
+    .then(() => model.close());
 }
 
 export default syncDatabase;
