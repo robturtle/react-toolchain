@@ -1,16 +1,14 @@
 import connection from './connection';
 import Sequelize from 'sequelize';
 
-const UserLogin = connection.define('userLogin', {
-  name: {
-    type: Sequelize.STRING,
-    primaryKey: true,
-  },
-
+const Snippet = connection.define('snippet', {
   key: {
     type: Sequelize.STRING,
-    primaryKey: true,
+  },
+
+  snippet: {
+    type: Sequelize.STRING,
   },
 });
 
-export default UserLogin;
+export default Snippet;

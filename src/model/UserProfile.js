@@ -1,7 +1,7 @@
 import connection from './connection';
 import Sequelize from 'sequelize';
 
-const UserProfile = connection.define('user_profile', {
+const UserProfile = connection.define('userProfile', {
   displayName: {
     type: Sequelize.STRING,
     allowNull: true,
