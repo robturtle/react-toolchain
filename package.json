@@ -36,6 +36,7 @@
   },
   "scripts": {
     "start": "DEBUG=tools:*,express:* babel-node tools/runner.js start",
+    "prestart": "npm run lint",
     "build": "DEBUG=tools:* babel-node tools/runner.js build",
     "bundle": "DEBUG=tools:* babel-node tools/runner.js bundle",
     "deploy": "DEBUG=tools:* babel-node tools/runner.js deploy",
