@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import path from 'path';
 import express from 'express';
 import PrettyError from 'pretty-error';
@@ -28,7 +29,7 @@ const pe = new PrettyError();
 pe.skipNodeFiles();
 pe.skipPackage('express');
 
-app.use((err, req, res, next) => {
+app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   console.error(pe.render(err));
   res.status(err.status || 500);
   res.send(err);

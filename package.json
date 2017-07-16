@@ -18,6 +18,8 @@
     "browser-sync": "^2.18.8",
     "chunk-manifest-webpack-plugin": "^1.1.0",
     "debug": "^2.6.6",
+    "eslint": "^4.2.0",
+    "eslint-plugin-react": "^7.1.0",
     "html-webpack-plugin": "^2.28.0",
     "pug": "^2.0.0-beta.12",
     "pug-loader": "^2.3.0",
@@ -36,7 +38,8 @@
     "start": "DEBUG=tools:*,express:* babel-node tools/runner.js start",
     "build": "DEBUG=tools:* babel-node tools/runner.js build",
     "bundle": "DEBUG=tools:* babel-node tools/runner.js bundle",
-    "deploy": "DEBUG=tools:* babel-node tools/runner.js deploy"
+    "deploy": "DEBUG=tools:* babel-node tools/runner.js deploy",
+    "lint": "eslint src"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",

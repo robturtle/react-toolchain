@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const DATABASE_URL = require('../config/config').DATABASE_URL;
 const Sequelize = require('sequelize');
 
