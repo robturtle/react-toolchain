@@ -1,6 +1,0 @@
-/* TODO: auto install watchman, init this file */
-{
-  schema: {
-    files: 'src/data/graphql/**/*.graphql'
-  }
-}
