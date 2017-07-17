@@ -1,13 +1,10 @@
-/* eslint-disable no-console */
 import hello from './hello';
-import client from './client';
-import product from './product';
+import user from './user';
 import { mergeResolvers } from 'merge-graphql-schemas';
 
 const rootValue = mergeResolvers([
+  user,
   hello,
-  client,
-  product,
 ]);
 
 export default rootValue;

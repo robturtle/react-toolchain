@@ -1,0 +1,54 @@
+enum UserRefType {
+  BY_NAME
+  BY_EMAIL
+}
+
+enum LoginType {
+  BY_PASSWORD
+  BY_GITHUB
+}
+
+input UserInfo {
+  email: String!
+  name: String!
+  company: String
+  location: String
+  website: String
+}
+
+input LoginInfo {
+  loginType: LoginType!
+  name: String!
+  key: String!
+}
+
+type Login {
+  loginType: String!
+  key: String!
+}
+
+type User {
+  email: String!
+  activated: Boolean!
+  name: String!
+  company: String
+  location: String
+  website: String
+  logins: [Login]
+
+  #snippets: [Snippet]
+  #presets: [Preset]
+  #usingSnippets: [Snippet]
+  #usingPresets: [Preset]
+}
+
+type Query {
+  user(refType: UserRefType!, ref: String!): User
+  users: [User]
+}
+
+type Mutation {
+  createUser(info: UserInfo!): User
+  updateUser(info: UserInfo!): User
+  deleteUser(info: UserInfo!): Boolean
+}
