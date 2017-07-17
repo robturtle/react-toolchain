@@ -29,7 +29,7 @@ type Login {
 
 type User {
   email: String!
-  activated: Boolean!
+  emailConfirmed: Boolean!
   name: String!
   company: String
   location: String
@@ -45,9 +45,12 @@ type User {
 type Query {
   user(refType: UserRefType!, ref: String!): User
   users: [User]
+  emailExists(email: String): Boolean
+  usernameExists(name: String): Boolean
 }
 
 type Mutation {
+  confirmEmail(info: UserInfo!): Boolean
   createUser(info: UserInfo!): User
   updateUser(info: UserInfo!): User
   deleteUser(info: UserInfo!): Boolean

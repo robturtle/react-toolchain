@@ -26,28 +26,40 @@ export default {
     if (refType === 'BY_EMAIL') {
       return User.findOne({ where: { email: ref } });
     }
-
     return User.findOne({ where: { name: ref } });
+  },
+
+  emailExists: async ({ email }) => {
+    const user = await User.findOne({ where: { email } });
+    return user !== null;
+  },
+
+  usernameExists: async ({ name }) => {
+    const user = await User.findOne({ where: { name } });
+    return user !== null;
+  },
+
+  confirmEmail: async ({ info }) => {
+    const user = await findUser(info);
+    await user.update({ emailConfirmed: true });
+    return true;
   },
 
   createUser: async ({ info }) => {
     await findUser(info, false);
     const user = await User.create(info);
-
     return user;
   },
 
   updateUser: async ({ info }) => {
     const user = await findUser(info);
     await user.update(info);
-
     return user;
   },
 
   deleteUser: async ({ info }) => {
     await findUser(info);
     await User.destroy({ where: { name: info.name } });
-
     return true;
   },
 };
