@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import path from 'path';
 import chokidar from 'chokidar';
 import { writeFile, copyFile, mkdir, copydir, cleandir } from './lib/fs';
@@ -18,14 +19,16 @@ async function copy() {
       }
     }, null, 2)),
     copydir(path.resolve(root, 'public'), path.resolve(root, 'dist/public')),
+    copydir(
+        path.resolve(root, 'src/data/graphql/types'),
+        path.resolve(root, 'dist/types')),
   ]);
 
   if (process.argv.includes('--watch')) {
-    const watcher = chokidar.watch([
-      path.resolve(root, 'public/**/*')
-    ], { ignoreInitial: true });
+    const watcher = chokidar.watch([path.resolve(root, 'public/**/*')],
+      { ignoreInitial: true });
 
-    watcher.on('all', async (event, path) => {
+    watcher.on('all', async (event, path) => { // eslint-disable-line no-shadow
       const name = `${event} ${path}`;
       console.time(name);
       const dir = path.dirname(path);
@@ -38,7 +41,13 @@ async function copy() {
           break;
         case 'unlink':
         case 'unlinkDir':
-          cleandir(dst, { nosort: true, dot: true });
+          cleandir(
+            dst,
+            {
+              nosort: true,
+              dot: true,
+            }
+          );
           break;
         default:
           return;

@@ -3,6 +3,8 @@ import path from 'path';
 import express from 'express';
 import PrettyError from 'pretty-error';
 import models from '../data/models';
+import graphqlHTTP from 'express-graphql';
+import { schema, rootValue } from '../data/graphql';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const app = express();
@@ -38,6 +40,14 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 models.sync()
   .then(() => console.log('models sync success.'))
   .catch(err => console.error(err.stack));
+
+console.log(rootValue);
+
+app.use('/graphql', graphqlHTTP({
+  schema,
+  rootValue,
+  graphiql: true,
+}))
 
 let port = process.env.PORT || 8888;
 app.listen(port, () => {
