@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * Adjusted based on React Starter Kit (https://www.reactstarterkit.com/)
  * 
@@ -99,7 +100,7 @@ var serverConfig = webpackMerge(baseConfig, {
   context: path.resolve(srcRoot, 'server'),
 
   entry: {
-    server: './server.js'
+    server: ['babel-polyfill', './server.js']
   },
 
   output: {
