@@ -10,3 +10,6 @@ do
     exit 1 # exit with failure status
   fi
 done
+
+echo 'test webpack bundle...'
+node_modules/.bin/webpack
