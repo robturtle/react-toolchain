@@ -1,7 +1,7 @@
 {
   "name": "react-toolchain",
   "engines": {
-    "node": "6.11.1"
+    "node": "8.1.4"
   },
   "version": "0.1.0",
   "description": "A demonstration of React toolchain",
