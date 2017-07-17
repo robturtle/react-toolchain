@@ -2,7 +2,7 @@
 import path from 'path';
 import express from 'express';
 import PrettyError from 'pretty-error';
-import models from '../model';
+import models from '../data/models';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const app = express();

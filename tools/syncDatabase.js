@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
-import model from '../src/model';
+import models from '../src/data/models';
 
 function syncDatabase() {
-  return model.sync({ force: true })
-    .then(() => model.close());
+  return models.sync({ force: true })
+    .then(() => models.close());
 }
 
 export default syncDatabase;
