@@ -19,7 +19,7 @@ const User = connection.define('user', {
   name: {
     type: Sequelize.STRING,
     validate: {
-      is: /^[a-z0-9_]+$/,
+      is: /^[a-zA-Z0-9_]+$/,
     },
     primaryKey: true,
     allowNull: false,
@@ -38,6 +38,9 @@ const User = connection.define('user', {
   website: {
     type: Sequelize.STRING,
     allowNull: true,
+    validate: {
+      isUrl: true,
+    }
   },
 }, {
   indexes: [
