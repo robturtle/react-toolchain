@@ -2,7 +2,7 @@ import connection from './connection';
 import Sequelize from 'sequelize';
 
 const UserLogin = connection.define('user_login', {
-  user: {
+  username: {
     type: Sequelize.STRING,
     primaryKey: true,
   },
@@ -14,7 +14,6 @@ const UserLogin = connection.define('user_login', {
 
   key: {
     type: Sequelize.STRING,
-    primaryKey: true,
   },
 });
 

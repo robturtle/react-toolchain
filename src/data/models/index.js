@@ -8,6 +8,7 @@ import Preset from './Preset';
 // Accounts
 User.hasMany(UserLogin, {
   as: 'logins',
+  foreignKey: 'username',
 });
 
 // Snippet ownership

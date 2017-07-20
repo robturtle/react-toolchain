@@ -23,6 +23,11 @@ var baseConfig = {
         test: /\.jsx?$/,
         include: srcRoot,
         loader: 'babel-loader',
+      },
+      {
+        test: /\.(graphql|gql)$/,
+        include: srcRoot,
+        loader: 'raw-loader',
       }
     ]
   },

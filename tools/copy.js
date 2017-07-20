@@ -19,9 +19,6 @@ async function copy() {
       }
     }, null, 2)),
     copydir(path.resolve(root, 'public'), path.resolve(root, 'dist/public')),
-    copydir(
-        path.resolve(root, 'src/data/graphql/types'),
-        path.resolve(root, 'dist/types')),
   ]);
 
   if (process.argv.includes('--watch')) {

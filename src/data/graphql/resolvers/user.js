@@ -19,24 +19,24 @@ async function findUser(info, expectExists = true) {
   return user;
 }
 
+export { findUser };
+
 export default {
-  users: () => User.findAll(),
+  users: () => User.findAll({
+    include: ['logins'],
+  }),
 
   user: ({ refType, ref }) => {
     if (refType === 'BY_EMAIL') {
-      return User.findOne({ where: { email: ref } });
+      return User.findOne({
+        where: { email: ref },
+        include: ['logins'],
+      });
     }
-    return User.findOne({ where: { name: ref } });
-  },
-
-  emailExists: async ({ email }) => {
-    const user = await User.findOne({ where: { email } });
-    return user !== null;
-  },
-
-  usernameExists: async ({ name }) => {
-    const user = await User.findOne({ where: { name } });
-    return user !== null;
+    return User.findOne({
+      where: { name: ref },
+      include: ['logins'],
+    });
   },
 
   confirmEmail: async ({ info }) => {

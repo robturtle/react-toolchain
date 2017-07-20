@@ -3,28 +3,12 @@ enum UserRefType {
   BY_EMAIL
 }
 
-enum LoginType {
-  BY_PASSWORD
-  BY_GITHUB
-}
-
 input UserInfo {
   email: String!
   name: String!
   company: String
   location: String
   website: String
-}
-
-input LoginInfo {
-  loginType: LoginType!
-  name: String!
-  key: String!
-}
-
-type Login {
-  loginType: String!
-  key: String!
 }
 
 type User {
@@ -34,7 +18,7 @@ type User {
   company: String
   location: String
   website: String
-  logins: [Login]
+  logins: [UserLogin]
 
   #snippets: [Snippet]
   #presets: [Preset]
@@ -45,8 +29,6 @@ type User {
 type Query {
   user(refType: UserRefType!, ref: String!): User
   users: [User]
-  emailExists(email: String): Boolean
-  usernameExists(name: String): Boolean
 }
 
 type Mutation {

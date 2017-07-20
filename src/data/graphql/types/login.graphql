@@ -1,0 +1,14 @@
+type UserLogin {
+  loginType: String!
+}
+
+input LoginInfo {
+  loginType: String!
+  key: String!
+}
+
+type Mutation {
+  createLogin(name: String!, info: LoginInfo!): UserLogin
+  updateLogin(name: String!, info: LoginInfo!): UserLogin
+  deleteLogin(name: String!, loginType: String!): Boolean
+}

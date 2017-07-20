@@ -1,10 +1,10 @@
-import hello from './hello';
 import user from './user';
+import login from './login';
 import { mergeResolvers } from 'merge-graphql-schemas';
 
 const rootValue = mergeResolvers([
   user,
-  hello,
+  login,
 ]);
 
 export default rootValue;
