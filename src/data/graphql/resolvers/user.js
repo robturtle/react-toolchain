@@ -26,7 +26,7 @@ export default {
     include: ['logins'],
   }),
 
-  user: ({ refType, ref }) => {
+  user({ refType, ref }) {
     if (refType === 'BY_EMAIL') {
       return User.findOne({
         where: { email: ref },
@@ -39,25 +39,25 @@ export default {
     });
   },
 
-  confirmEmail: async ({ info }) => {
+  async confirmEmail({ info }) {
     const user = await findUser(info);
     await user.update({ emailConfirmed: true });
     return true;
   },
 
-  createUser: async ({ info }) => {
+  async createUser({ info }) {
     await findUser(info, false);
     const user = await User.create(info);
     return user;
   },
 
-  updateUser: async ({ info }) => {
+  async updateUser({ info }) {
     const user = await findUser(info);
     await user.update(info);
     return user;
   },
 
-  deleteUser: async ({ info }) => {
+  async deleteUser({ info }) {
     await findUser(info);
     await User.destroy({ where: { name: info.name } });
     return true;
