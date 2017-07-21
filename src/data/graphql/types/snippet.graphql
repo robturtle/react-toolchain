@@ -4,6 +4,7 @@ enum SnippetType {
 }
 
 input SnippetInfo {
+  author: String!
   scope: String!
   name: String!
 }
@@ -11,21 +12,22 @@ input SnippetInfo {
 input SnippetContents {
   scope: String
   name: String
+  type: SnippetType!
   keyword: String!
   substitution: String!
-  type: SnippetType!
 }
 
 type Snippet {
+  author: String!
+  scope: String!
   name: String!
+
+  type: SnippetType!
   keyword: String!
   substitution: String!
-  type: SnippetType!
-  scope: String!
 
   forks: [Snippet]
   upstream: Snippet
-  author: String!
 }
 
 type Query {
@@ -35,16 +37,14 @@ type Query {
 
 type Mutation {
   createSnippet(
-      author: String!,
       info: SnippetInfo!,
       contents: SnippetContents!): Snippet
 
   updateSnippet(
-      author: String!,
       info: SnippetInfo!,
       contents: SnippetContents!): Snippet
 
-  deleteSnippet(author: String!, info: SnippetInfo!): Boolean
+  deleteSnippet(info: SnippetInfo!): Boolean
       
-  forkSnippet(forker: String!, author: String!, info: SnippetInfo!): Snippet
+  forkSnippet(forker: String!, info: SnippetInfo!): Snippet
 }

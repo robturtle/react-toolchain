@@ -18,10 +18,9 @@ export default {
       return Snippet.findAll();
     },
 
-    snippet(_, { author, info }) {
+    snippet(_, { info }) {
       return Snippet.find({
         where: {
-          author,
           ...info,
         }
       });
@@ -29,31 +28,30 @@ export default {
   },
 
   Mutation: {
-    async createSnippet(_, { author, info, contents }) {
-      await findUser({ name: author });
-      await findSnippet({ author, ...info }, false);
+    async createSnippet(_, { info, contents }) {
+      await findUser({ name: info.author });
+      await findSnippet({ ...info }, false);
       return Snippet.create({
-        author,
         ...info,
         ...contents,
       });
     },
 
-    async updateSnippet(_, { author, info, contents }) {
-      const snippet = await findSnippet({ author, ...info });
+    async updateSnippet(_, { info, contents }) {
+      const snippet = await findSnippet({ ...info });
       await snippet.update({ ...contents });
       return snippet;
     },
 
-    async deleteSnippet(_, { author, info }) {
-      const snippet = await findSnippet({ author, ...info });
+    async deleteSnippet(_, { info }) {
+      const snippet = await findSnippet({ ...info });
       await snippet.destroy();
       return true;
     },
 
-    async forkSnippet(_, { forker, author, info }) {
+    async forkSnippet(_, { forker, info }) {
       const user = await findUser({ name: forker });
-      const snippet = await findSnippet({ author, ...info });
+      const snippet = await findSnippet({ ...info });
       return Snippet.create({
         author: user.name,
         ...snippet.contents,
