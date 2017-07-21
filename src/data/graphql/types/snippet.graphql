@@ -1,0 +1,50 @@
+enum SnippetType {
+  WHOLE_LINE
+  IN_LINE
+}
+
+input SnippetInfo {
+  scope: String!
+  name: String!
+}
+
+input SnippetContents {
+  scope: String
+  name: String
+  keyword: String!
+  substitution: String!
+  type: SnippetType!
+}
+
+type Snippet {
+  name: String!
+  keyword: String!
+  substitution: String!
+  type: SnippetType!
+  scope: String!
+
+  forks: [Snippet]
+  upstream: Snippet
+  author: String!
+}
+
+type Query {
+  snippets: [Snippet]
+  snippet(author: String!, info: SnippetInfo!): Snippet
+}
+
+type Mutation {
+  createSnippet(
+      author: String!,
+      info: SnippetInfo!,
+      contents: SnippetContents!): Snippet
+
+  updateSnippet(
+      author: String!,
+      info: SnippetInfo!,
+      contents: SnippetContents!): Snippet
+
+  deleteSnippet(author: String!, info: SnippetInfo!): Boolean
+      
+  forkSnippet(forker: String!, author: String!, info: SnippetInfo!): Snippet
+}
