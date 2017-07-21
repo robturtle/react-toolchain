@@ -61,8 +61,9 @@ export default {
     },
 
     async deleteUser(_, { info }) {
-      await findUser(info);
-      await User.destroy({ where: { name: info.name } });
+      // TODO: backup his snippets/presets first
+      const user = await findUser(info);
+      await user.destroy();
       return true;
     },
   },

@@ -23,10 +23,10 @@ const Snippet = connection.define('snippet', {
   type: {
     type: Sequelize.ENUM,
     values: [
-      'wholeline',
-      'inline',
+      'WHOLE_LINE',
+      'IN_LINE',
     ],
-    defaultValue: 'wholeline',
+    defaultValue: 'WHOLE_LINE',
   },
 
   author: {
@@ -58,7 +58,21 @@ const Snippet = connection.define('snippet', {
   getterMethods: {
     qualifiedName() {
       return `${this.author}/${this.scope}/${this.name}`;
-    }
+    },
+
+    contents() {
+      return {
+        scope: this.scope,
+        name: this.name,
+        type: this.type,
+        keyword: this.keyword,
+        substitution: this.substitution,
+      }
+    },
+
+    upstream() {
+      return Snippet.findById(this.upstreamId);
+    },
   },
 });
 

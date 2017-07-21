@@ -5,36 +5,37 @@ import Snippet from './Snippet';
 import Preset from './Preset';
 
 // Accounts
-User.hasMany(UserLogin, {
+User.Login = User.hasMany(UserLogin, {
   as: 'logins',
   foreignKey: 'username',
 });
 
 // Snippet ownership
-User.hasMany(Snippet, {
+User.Snippet = User.hasMany(Snippet, {
   as: 'snippets',
   foreignKey: 'author',
 });
 
-User.hasMany(Preset, {
+User.Preset = User.hasMany(Preset, {
   as: 'presets',
   foreignKey: 'author',
 });
 
-Snippet.belongsToMany(Preset, {
+Snippet.Preset = Snippet.belongsToMany(Preset, {
   as: 'presets',
   foreignKey: 'collected',
   through: 'collect',
 });
-Preset.belongsToMany(Snippet, {
+Preset.Snippet = Preset.belongsToMany(Snippet, {
   as: 'snippets',
   foreignKey: 'collector',
   through: 'collect',
 });
 
 // Forking
-Snippet.belongsTo(Snippet, {
-  foreignKey: 'upstream',
+Snippet.Fork = Snippet.hasMany(Snippet, {
+  as: 'forks',
+  foreignKey: 'upstreamId',
 });
 
 // Using snippets
@@ -43,7 +44,7 @@ Snippet.belongsToMany(User, {
   foreignKey: 'snippet',
   through: 'activate',
 });
-User.belongsToMany(Snippet, {
+User.UsingSnippet = User.belongsToMany(Snippet, {
   as: 'usingSnippets',
   foreignKey: 'user',
   through: 'activate',
@@ -54,7 +55,7 @@ Preset.belongsToMany(User, {
   foreignKey: 'user',
   through: 'activatePreset',
 });
-User.belongsToMany(Preset, {
+User.UsingPreset = User.belongsToMany(Preset, {
   as: 'usingPresets',
   foreignKey: 'preset',
   through: 'activatePreset',
