@@ -51,6 +51,7 @@
     "express": "^4.15.2",
     "express-graphql": "^0.6.6",
     "graphql": "^0.10.4",
+    "graphql-tools": "^1.1.0",
     "merge-graphql-schemas": "^1.1.0",
     "mz": "^2.6.0",
     "pg": "^6.4.0",

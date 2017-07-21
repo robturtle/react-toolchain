@@ -22,44 +22,48 @@ async function findUser(info, expectExists = true) {
 export { findUser };
 
 export default {
-  users: () => User.findAll({
-    include: ['logins'],
-  }),
+  Query: {
+    users: () => User.findAll({
+      include: ['logins'],
+    }),
 
-  user({ refType, ref }) {
-    if (refType === 'BY_EMAIL') {
+    user(_, { refType, ref }) {
+      if (refType === 'BY_EMAIL') {
+        return User.findOne({
+          where: { email: ref },
+          include: ['logins'],
+        });
+      }
       return User.findOne({
-        where: { email: ref },
+        where: { name: ref },
         include: ['logins'],
       });
-    }
-    return User.findOne({
-      where: { name: ref },
-      include: ['logins'],
-    });
+    },
   },
 
-  async confirmEmail({ info }) {
-    const user = await findUser(info);
-    await user.update({ emailConfirmed: true });
-    return true;
-  },
+  Mutation: {
+    async confirmEmail(_, { info }) {
+      const user = await findUser(info);
+      await user.update({ emailConfirmed: true });
+      return true;
+    },
 
-  async createUser({ info }) {
-    await findUser(info, false);
-    const user = await User.create(info);
-    return user;
-  },
+    async createUser(_, { info }) {
+      await findUser(info, false);
+      const user = await User.create(info);
+      return user;
+    },
 
-  async updateUser({ info }) {
-    const user = await findUser(info);
-    await user.update(info);
-    return user;
-  },
+    async updateUser(_, { info }) {
+      const user = await findUser(info);
+      await user.update(info);
+      return user;
+    },
 
-  async deleteUser({ info }) {
-    await findUser(info);
-    await User.destroy({ where: { name: info.name } });
-    return true;
+    async deleteUser(_, { info }) {
+      await findUser(info);
+      await User.destroy({ where: { name: info.name } });
+      return true;
+    },
   },
 };

@@ -1,10 +1,10 @@
-import { buildSchema } from 'graphql';
-import types from './types';
-import rootValue from './resolvers';
+import { makeExecutableSchema } from 'graphql-tools';
+import typeDefs from './types';
+import resolvers from './resolvers';
 
-const schema = buildSchema(types);
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+});
 
-export {
-  schema,
-  rootValue,
-};
+export default schema;
