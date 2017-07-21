@@ -1,7 +1,6 @@
 import connection from './connection';
 import User from './User';
 import UserLogin from './UserLogin';
-import Scope from './Scope';
 import Snippet from './Snippet';
 import Preset from './Preset';
 
@@ -31,12 +30,6 @@ Preset.belongsToMany(Snippet, {
   as: 'snippets',
   foreignKey: 'collector',
   through: 'collect',
-});
-
-// Scopes
-Scope.hasMany(Snippet, {
-  as: 'snippets',
-  foreignKey: 'scope',
 });
 
 // Forking
@@ -79,7 +72,6 @@ export default {
 export {
   User,
   UserLogin,
-  Scope,
   Snippet,
   Preset,
 };
