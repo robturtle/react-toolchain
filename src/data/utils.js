@@ -5,6 +5,10 @@ import {
   Preset,
 } from './models';
 
+class ExistenceAssertionError extends Error {}
+class NotFoundError extends ExistenceAssertionError {}
+class AlreadyExistsError extends ExistenceAssertionError {}
+
 function finder(clazz) {
   async function find(keys, expectExistence = true) {
     // use object key to print model name polymorphically
@@ -14,10 +18,10 @@ function finder(clazz) {
         // eslint-disable-next-line no-await-in-loop
         const instance = await model.findOne({ where: { ...keys } });
         if (instance && !expectExistence) {
-          throw Error(`${name} already exists!`);
+          throw new AlreadyExistsError(`${name} already exists!`);
         }
         if (!instance && expectExistence) {
-          throw Error(`${name} not exists!`);
+          throw new NotFoundError(`${name} not exists!`);
         }
         return instance;
       }
@@ -38,6 +42,9 @@ export {
   findLogin,
   findSnippet,
   findPreset,
+  ExistenceAssertionError,
+  NotFoundError,
+  AlreadyExistsError,
 }
 
 export default finder;
