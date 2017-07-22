@@ -44,13 +44,12 @@ app.use('/graphql', graphqlHTTP({
 }));
 
 app.use('/restful', restful);
-// app.use(restful.errorHandler);
 
-// app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
-//   console.error(pe.render(err));
-//   res.status(err.status || 500);
-//   res.send(err);
-// });
+app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+  console.error(pe.render(err));
+  res.status(err.status || 500);
+  res.send(err);
+});
 
 let port = process.env.PORT || 8888;
 app.listen(port, () => {

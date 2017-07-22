@@ -30,10 +30,10 @@ router.all('/:username*', async (req, res, next) => {
             'email is required to create a new User');
         return next(err);
       }
-        await Promise.all([
-          findUser({ name: req.params.username }, false),
-          findUser({ email: req.body.email }, false),
-        ]);
+      await Promise.all([
+        findUser({ name: req.params.username }, false),
+        findUser({ email: req.body.email }, false),
+      ]);
     } else {
       req.user = await findUser({ name: req.params.username });
     }
