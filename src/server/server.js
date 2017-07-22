@@ -5,6 +5,7 @@ import PrettyError from 'pretty-error';
 import models from '../data/models';
 import graphqlHTTP from 'express-graphql';
 import schema from '../data/graphql';
+import restful from '../data/restful';
 import bodyParser from 'body-parser';
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -33,12 +34,6 @@ const pe = new PrettyError();
 pe.skipNodeFiles();
 pe.skipPackage('express');
 
-app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
-  console.error(pe.render(err));
-  res.status(err.status || 500);
-  res.send(err);
-});
-
 models.sync()
   .then(() => console.log('models sync success.'))
   .catch(err => console.error(err.stack));
@@ -46,7 +41,16 @@ models.sync()
 app.use('/graphql', graphqlHTTP({
   schema,
   graphiql: true,
-}))
+}));
+
+app.use('/restful', restful);
+// app.use(restful.errorHandler);
+
+// app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+//   console.error(pe.render(err));
+//   res.status(err.status || 500);
+//   res.send(err);
+// });
 
 let port = process.env.PORT || 8888;
 app.listen(port, () => {
