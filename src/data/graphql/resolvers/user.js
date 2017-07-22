@@ -67,4 +67,14 @@ export default {
       return true;
     },
   },
+
+  User: {
+    snippets: self => self.getSnippets(),
+
+    presets: self => self.getPresets(),
+
+    usingSnippets: self => self.getUsingSnippets(),
+
+    usingPresets: self => self.getUsingPresets(),
+  }
 };
