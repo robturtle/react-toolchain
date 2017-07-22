@@ -1,0 +1,23 @@
+type Preset {
+  author: String!
+  name: String!
+
+  snippets: [Snippet]
+}
+
+input PresetInfo {
+  author: String!
+  name: String!
+}
+
+type Query {
+  presets: [Preset]
+  preset(info: PresetInfo!): Preset
+}
+
+type Mutation {
+  createPreset(info: PresetInfo!): Preset
+  deletePreset(info: PresetInfo!): Boolean
+  collectSnippetToPreset(snippetInfo: SnippetInfo!, presetInfo: PresetInfo!): Preset
+  removeSnippetFromPreset(snippetInfo: SnippetInfo!, presetInfo: PresetInfo!): Preset
+}

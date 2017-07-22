@@ -12,6 +12,8 @@ async function findSnippet(keys, expectExistence = true) {
   return snippet;
 }
 
+export { findSnippet };
+
 export default {
   Query: {
     snippets() {
@@ -19,11 +21,7 @@ export default {
     },
 
     snippet(_, { info }) {
-      return Snippet.find({
-        where: {
-          ...info,
-        }
-      });
+      return Snippet.find({ where: { ...info, } });
     }
   },
 
