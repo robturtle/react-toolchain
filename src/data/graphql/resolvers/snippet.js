@@ -17,8 +17,10 @@ export default {
 
   Mutation: {
     async createSnippet(_, { info, contents }) {
-      await findUser({ name: info.author });
-      await findSnippet({ ...info }, false);
+      await Promise.all([
+        findUser({ name: info.author }),
+        findSnippet({ ...info }, false),
+      ]);
       return Snippet.create({
         ...info,
         ...contents,
@@ -38,8 +40,10 @@ export default {
     },
 
     async forkSnippet(_, { forker, info }) {
-      const user = await findUser({ name: forker });
-      const snippet = await findSnippet({ ...info });
+      const [user, snippet] = await Promise.all([
+        findUser({ name: forker }),
+        findSnippet({ ...info }),
+      ]);
       await findSnippet({
         author: user.name,
         scope: snippet.scope,
@@ -55,11 +59,7 @@ export default {
 
   Snippet: {
     forks(self) {
-      return Snippet.findAll({
-        where: {
-          upstreamId: self.id,
-        }
-      });
+      return self.getForks();
     }
   },
 };

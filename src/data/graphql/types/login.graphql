@@ -9,6 +9,6 @@ input LoginInfo {
 
 type Mutation {
   createLogin(name: String!, info: LoginInfo!): UserLogin
-  updateLogin(name: String!, info: LoginInfo!): UserLogin
+  updateLogin(name: String!, loginType: String!, info: LoginInfo!): UserLogin
   deleteLogin(name: String!, loginType: String!): Boolean
 }

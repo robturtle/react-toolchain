@@ -16,8 +16,10 @@ export default {
 
   Mutation: {
     async createPreset(_, { info }) {
-      await findUser({ name: info.author });
-      await findPreset(info, false);
+      await Promise.all([
+        findUser({ name: info.author }),
+        findPreset(info, false),
+      ]);
       return Preset.create({ ...info });
     },
 
@@ -28,15 +30,19 @@ export default {
     },
 
     async collectSnippetToPreset(_, { snippetInfo, presetInfo }) {
-      const preset = await findPreset(presetInfo);
-      const snippet = await findSnippet(snippetInfo);
+      const [preset, snippet] = await Promise.all([
+        findPreset(presetInfo),
+        findSnippet(snippetInfo),
+      ]);
       await preset.addSnippet(snippet);
       return preset;
     },
 
     async removeSnippetFromPreset(_, { snippetInfo, presetInfo }) {
-      const preset = await findPreset(presetInfo);
-      const snippet = await findSnippet(snippetInfo);
+      const [preset, snippet] = await Promise.all([
+        findPreset(presetInfo),
+        findSnippet(snippetInfo),
+      ]);
       await preset.removeSnippet(snippet);
       return preset;
     },
