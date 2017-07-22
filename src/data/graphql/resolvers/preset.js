@@ -13,6 +13,8 @@ async function findPreset(keys, expectExistence = true) {
   return preset;
 }
 
+export { findPreset };
+
 export default {
   Query: {
     presets: () => Preset.findAll(),

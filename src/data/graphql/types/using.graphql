@@ -1,0 +1,6 @@
+type Mutation {
+  useSnippet(name: String!, info: SnippetInfo!): User!
+  notUseSnippet(name: String!, info: SnippetInfo!): User!
+  usePreset(name: String!, info: PresetInfo!): User!
+  notUsePreset(name: String!, info: PresetInfo!): User!
+}
