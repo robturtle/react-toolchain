@@ -32,7 +32,7 @@ type Snippet {
 
 type Query {
   snippets: [Snippet]
-  snippet(author: String!, info: SnippetInfo!): Snippet
+  snippet(info: SnippetInfo!): Snippet
 }
 
 type Mutation {
