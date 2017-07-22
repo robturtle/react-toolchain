@@ -4,8 +4,8 @@ enum UserRefType {
 }
 
 input UserInfo {
-  email: String!
-  name: String!
+  email: String
+  name: String
   company: String
   location: String
   website: String
@@ -34,6 +34,6 @@ type Query {
 type Mutation {
   confirmEmail(info: UserInfo!): Boolean
   createUser(info: UserInfo!): User
-  updateUser(info: UserInfo!): User
+  updateUser(before: UserInfo!, after: UserInfo): User
   deleteUser(info: UserInfo!): Boolean
 }

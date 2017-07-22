@@ -1,19 +1,9 @@
-import { findUser } from './user';
-import { findSnippet } from './snippet';
+import {
+  findUser,
+  findSnippet,
+  findPreset,
+} from './utils';
 import { Preset } from '../../models';
-
-async function findPreset(keys, expectExistence = true) {
-  const preset = await Preset.find({ where: keys });
-  if (!preset && expectExistence) {
-    throw Error('Preset not exists!');
-  }
-  if (preset && !expectExistence) {
-    throw Error('Preset already exists!');
-  }
-  return preset;
-}
-
-export { findPreset };
 
 export default {
   Query: {

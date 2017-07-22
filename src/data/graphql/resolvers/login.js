@@ -1,5 +1,5 @@
 import { UserLogin } from '../../models';
-import { findUser } from './user';
+import { findUser } from './utils';
 
 export default {
   Mutation: {

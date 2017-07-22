@@ -1,25 +1,7 @@
 import {
   User,
 } from '../../models';
-
-async function findUser(info, expectExists = true) {
-  const user = await User.findOne({ where: { name: info.name } });
-  if (!expectExists) {
-    if (user) {
-      throw Error('User name already exists!');
-    }
-    if (await User.findOne({ where: { email: info.email } })) {
-      throw Error('User email alreay exists!');
-    }
-  }
-  if (!user && expectExists) {
-    throw Error('User does not exist!')
-  }
-
-  return user;
-}
-
-export { findUser };
+import { findUser } from './utils';
 
 export default {
   Query: {
@@ -29,15 +11,9 @@ export default {
 
     user(_, { refType, ref }) {
       if (refType === 'BY_EMAIL') {
-        return User.findOne({
-          where: { email: ref },
-          include: ['logins'],
-        });
+        return findUser({ email: ref });
       }
-      return User.findOne({
-        where: { name: ref },
-        include: ['logins'],
-      });
+      return findUser({ name: ref });
     },
   },
 
@@ -54,9 +30,9 @@ export default {
       return user;
     },
 
-    async updateUser(_, { info }) {
-      const user = await findUser(info);
-      await user.update(info);
+    async updateUser(_, { before, after }) {
+      const user = await findUser(before);
+      await user.update(after);
       return user;
     },
 
@@ -69,6 +45,8 @@ export default {
   },
 
   User: {
+    logins: self => self.getLogins(),
+
     snippets: self => self.getSnippets(),
 
     presets: self => self.getPresets(),

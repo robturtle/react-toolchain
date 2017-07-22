@@ -1,6 +1,8 @@
-import { findUser } from './user';
-import { findSnippet } from './snippet';
-import { findPreset } from './preset';
+import {
+  findUser,
+  findSnippet,
+  findPreset
+} from './utils';
 
 export default {
   Mutation: {

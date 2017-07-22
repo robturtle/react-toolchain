@@ -1,18 +1,8 @@
 import { Snippet } from '../../models';
-import { findUser } from './user';
-
-async function findSnippet(keys, expectExistence = true) {
-  const snippet = await Snippet.findOne({ where: keys });
-  if (!snippet && expectExistence) {
-    throw Error('Snippet does not exist!');
-  }
-  if (snippet && !expectExistence) {
-    throw Error('Snippet already exists!');
-  }
-  return snippet;
-}
-
-export { findSnippet };
+import {
+  findUser,
+  findSnippet,
+} from './utils';
 
 export default {
   Query: {
@@ -50,8 +40,13 @@ export default {
     async forkSnippet(_, { forker, info }) {
       const user = await findUser({ name: forker });
       const snippet = await findSnippet({ ...info });
-      return Snippet.create({
+      await findSnippet({
         author: user.name,
+        scope: snippet.scope,
+        name: snippet.name,
+      }, false);
+      return Snippet.create({
+        author: forker,
         ...snippet.contents,
         upstreamId: snippet.id,
       });
