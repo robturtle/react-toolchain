@@ -66,13 +66,9 @@ router.delete('/:username', async (req, res) => {
 });
 
 router.get('/:username/snippets', async (req, res) => {
-  try {
-    const snippets = await req.user.getSnippets();
-    const data = snippets.map(extractSnippet);
-    res.json(makeData(data));
-  } catch (e) {
-    res.json(makeData(e.message))
-  }
+  const snippets = await req.user.getSnippets();
+  const data = snippets.map(extractSnippet);
+  res.json(makeData(data));
 });
 
 export default router;
