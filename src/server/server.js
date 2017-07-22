@@ -34,7 +34,7 @@ const pe = new PrettyError();
 pe.skipNodeFiles();
 pe.skipPackage('express');
 
-models.sync()
+const modelSynced = models.sync()
   .then(() => console.log('models sync success.'))
   .catch(err => console.error(err.stack));
 
@@ -52,13 +52,13 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 });
 
 let port = process.env.PORT || 8888;
-app.listen(port, () => {
-  // meet the convention in tools/startServer.js
-  console.log(`Server started on http://localhost:${port}/`);
-});
 
-app._router.stack.forEach(function(r){
-  if (r.route && r.route.path){
-    console.log(r.route.path)
-  }
-});
+if (module.hot) {
+  app.hot = module.hot;
+  module.hot.accept();
+} else {
+  modelSynced.then(() => app.listen(port, () => {
+    // meet the convention in tools/startServer.js
+    console.log(`Server started on http://localhost:${port}/`);
+  }));
+}
