@@ -5,6 +5,7 @@ import PrettyError from 'pretty-error';
 import models from '../data/models';
 import graphqlHTTP from 'express-graphql';
 import schema from '../data/graphql';
+import bodyParser from 'body-parser';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const app = express();
@@ -18,8 +19,9 @@ global.navigator.userAgent = global.navigator.userAgent || 'all';
 // Middlewares
 // ----------------------------------------------------------------------
 app.use(express.static(path.join(__dirname, 'public')));
-// TODO cookie parser
-// TODO body parser
+// TODO: cookie parser
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 if (!isProduction) {
   app.enable('trust proxy');
