@@ -2,7 +2,7 @@ import { Snippet } from '../../models';
 import {
   findUser,
   findSnippet,
-} from './utils';
+} from '../../utils';
 
 export default {
   Query: {

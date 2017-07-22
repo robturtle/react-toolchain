@@ -3,7 +3,7 @@ import {
   UserLogin,
   Snippet,
   Preset,
-} from '../../models';
+} from './models';
 
 function finder(clazz) {
   async function find(keys, expectExistence = true) {

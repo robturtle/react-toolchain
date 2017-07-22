@@ -2,7 +2,7 @@ import {
   findUser,
   findSnippet,
   findPreset
-} from './utils';
+} from '../../utils';
 
 export default {
   Mutation: {

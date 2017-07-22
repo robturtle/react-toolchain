@@ -2,7 +2,7 @@ import {
   findUser,
   findSnippet,
   findPreset,
-} from './utils';
+} from '../../utils';
 import { Preset } from '../../models';
 
 export default {

@@ -1,7 +1,7 @@
 import {
   User,
 } from '../../models';
-import { findUser } from './utils';
+import { findUser } from '../../utils';
 
 export default {
   Query: {

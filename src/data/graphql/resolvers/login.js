@@ -2,7 +2,7 @@ import { UserLogin } from '../../models';
 import {
   findUser,
   findLogin,
-} from './utils';
+} from '../../utils';
 
 export default {
   Mutation: {
