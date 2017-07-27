@@ -12,7 +12,7 @@ class AlreadyExistsError extends ExistenceAssertionError {}
 function finder(clazz) {
   async function find(keys, expectExistence = true) {
     // use object key to print model name polymorphically
-    for (let name in clazz) {
+    for (const name in clazz) {
       if (Reflect.apply(Object.prototype.hasOwnProperty, clazz, [name])) {
         const model = clazz[name];
         // eslint-disable-next-line no-await-in-loop

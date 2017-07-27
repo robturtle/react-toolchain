@@ -15,7 +15,7 @@ function makeData(data) {
 function extractAttributes(fields) {
   function extract(obj) {
     const extracted = {};
-    for (let field of fields) {
+    for (const field of fields) {
       extracted[field] = obj[field];
     }
     return extracted;

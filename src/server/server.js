@@ -51,7 +51,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   res.send(err);
 });
 
-let port = process.env.PORT || 8888;
+const port = process.env.PORT || 8888;
 
 if (module.hot) {
   app.hot = module.hot;
