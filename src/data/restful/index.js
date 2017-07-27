@@ -17,6 +17,8 @@ router.get('/fuckme', (req, res) => { // eslint-disable-line
 
 // eslint-disable-next-line no-unused-vars
 router.use((err, req, res, next) => {
+  // https://goo.gl/qbMhQC rely on babel-plugin-transform-builtin-extend
+  // If you intend to support IE<= 10, check out its document.
   if (err instanceof NotFoundError) {
     return res.status(404).json(makeError(err));
   } else if (err instanceof AlreadyExistsError) {
