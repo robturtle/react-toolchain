@@ -8,15 +8,28 @@ const Snippet = connection.define('snippet', {
     primaryKey: true,
   },
 
+  author: {
+    type: Sequelize.STRING,
+    unique: 'authorScopeNameRevision',
+    allowNull: false,
+  },
+
   name: {
     type: Sequelize.STRING,
-    unique: 'authorScopeName',
+    unique: 'authorScopeNameRevision',
     allowNull: false,
   },
 
   scope: {
     type: Sequelize.STRING,
-    unique: 'authorScopeName',
+    unique: 'authorScopeNameRevision',
+    allowNull: false,
+  },
+
+  revision: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0,
+    unique: 'authorScopeNameRevision',
     allowNull: false,
   },
 
@@ -27,12 +40,6 @@ const Snippet = connection.define('snippet', {
       'IN_LINE',
     ],
     defaultValue: 'WHOLE_LINE',
-  },
-
-  author: {
-    type: Sequelize.STRING,
-    unique: 'authorScopeName',
-    allowNull: false,
   },
 
   keyword: {
