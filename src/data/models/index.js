@@ -3,10 +3,15 @@ import User from './User';
 import UserLogin from './UserLogin';
 import Snippet from './Snippet';
 import Preset from './Preset';
+import Session from './Session';
 
 // Accounts
 User.Login = User.hasMany(UserLogin, {
   as: 'logins',
+  foreignKey: 'username',
+});
+User.Session = User.hasMany(Session, {
+  as: 'sessions',
   foreignKey: 'username',
 });
 
@@ -71,8 +76,10 @@ export default {
 };
 
 export {
+  connection,
   User,
   UserLogin,
   Snippet,
   Preset,
+  Session,
 };

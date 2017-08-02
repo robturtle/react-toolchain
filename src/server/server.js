@@ -2,12 +2,13 @@
 import path from 'path';
 import express from 'express';
 import PrettyError from 'pretty-error';
-import models from '../data/models';
+import models, { connection } from '../data/models';
 import graphqlHTTP from 'express-graphql';
 import schema from '../data/graphql';
 import restful from '../data/restful';
 import bodyParser from 'body-parser';
-import session, { MemoryStore } from 'express-session';
+import session, { Store } from 'express-session';
+import sequelizeSession from 'connect-session-sequelize';
 import { auth } from '../../config/config';
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -25,31 +26,50 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(session({
+// Session
+// ----------------------------------------------------------------------
+const SequelizeStore = sequelizeSession(Store);
+const sessionConfig = {
   secret: isProduction ? auth.sessionSecret : 'snippetaas',
-  // TODO: isProduction ? Session model
-  store: new MemoryStore(),
+
+  store: new SequelizeStore({
+    db: connection,
+    table: 'session',
+    extendDefaultFields(defaults, sess) {
+      return {
+        data: defaults.data,
+        expires: defaults.expires,
+        username: sess.username,
+      };
+    },
+  }),
+
   cookie: {
     maxAge: isProduction ? 1000 * 60 * 60 * 24 * 180 : 1000 * 15,
     httpOnly: true,
-    secure: isProduction,
+    // TODO: enable it after setup TLS for dev server
+    // secure: isProduction,
   },
-  // TODO: Sequelize only have update() but not touch(), research needed
-  // to use "resave: false".
+
   resave: false,
+
   saveUninitialized: false,
-}));
+};
+app.use(session(sessionConfig));
 
 app.get('/session', (req, res) => {
   const sess = req.session;
   if (sess.views) {
     sess.views++;
     res.setHeader('Content-Type', 'text/html');
+    res.write(`<p>username: ${sess.username}</p>`);
     res.write(`<p>views: ${sess.views}</p>`);
     res.write(`<p>expires in ${sess.cookie.maxAge / 1000}s</p>`);
     res.end();
   } else {
     sess.views = 1;
+    // FIXME: if username not exists in DB, it failed silently
+    sess.username = 'snippetaas';
     res.send('new session, try refresh it.');
   }
 });
