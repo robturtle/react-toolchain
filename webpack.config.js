@@ -1,7 +1,7 @@
 /* eslint-disable */
 /**
  * Adjusted based on React Starter Kit (https://www.reactstarterkit.com/)
- * 
+ *
  * Licensed under MIT license.
  */
 var path = require('path');
@@ -57,8 +57,8 @@ var clientConfig = webpackMerge(baseConfig, {
   },
 
   output: {
-    filename: isProduction ? '[name].[chunkhash].js' : '[name].js',
-    chunkFilename: isProduction ? '[name].[chunkhash].js' : '[name].js',
+    filename: isProduction ? '[name].[hash].js' : '[name].js',
+    chunkFilename: isProduction ? '[name].[hash].js' : '[name].js',
     publicPath: '/',
   },
 
